@@ -1,0 +1,3 @@
+{
+    "-W060": false // disable: document.write can be a form of eval.
+}
