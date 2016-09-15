@@ -22,6 +22,7 @@ Check out the [changelog](changelog.md) for previous release information.
 
 ## Quick start
 There's a couple different ways you can get your hands on the T4Utils 2 library:
+
 1. [Download one of the latest releases](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases)
 2. Clone the repo, `npm install`, and `gulp` (Requires [Node](https://nodejs.org/))
 
