@@ -5,8 +5,8 @@ A Javascript library of utility classes and extensions for TerminalFour Programm
 
 ## Latest Version
 
-## [v1.1.0_2016.09.15 - ordinalIndicators Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.1.0_2016.09.15)
-ordinalIndicators are now properly working in TerminalFour Version 8.1! Here's what's changed:
+## [v1.1.0_2016.09.15 - Ordinal Indicators Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.1.0_2016.09.15)
+`ordinalIndicators` are now properly working in TerminalFour Version 8.1! Here's what's changed:
 * For the ordinalIndicators module `pageFirst`, `pageLast`, and `pageIndex`, the CSHelper API calls still refer to the ID of the content-type a piece of content utilizes as `content.getTemplateID();`. This is different from how to retrieve the content-type ID of the current content your in, which is `content.getContentTypeID()`
 
 Check out the [changelog](changelog.md) for previous release information.
