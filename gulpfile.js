@@ -4,6 +4,7 @@ var config = require('./gulp/config.js'),
     gulp = require('gulp'),
     header = require('./gulp/header.js'),
     include = require('gulp-include'),
+    jsdoc = require('gulp-jsdoc3'),
     pkg = require('./package.json'),
     rename = require('gulp-rename'),
     replace = require('gulp-replace'),
@@ -40,4 +41,10 @@ gulp.task('build-min', function() {
 // Watch Task
 gulp.task('watch', function() {
     gulp.watch(config.watch, ['build']);                  /* Run the build task */
+});
+
+// Docs Task
+gulp.task('docs', ['build'], function(doc) {
+    gulp.src('dist/T4Utils.js', {read: false})
+        .pipe(jsdoc(doc));
 });
