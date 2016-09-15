@@ -3,7 +3,9 @@
 # T4Utils 2
 A Javascript library of utility classes and extensions for TerminalFour Programmable Layouts. This repo is a port/continuation of [Ben Margevicius'](https://github.com/bdm4) unmaintained [T4Utils](https://github.com/FPBSchoolOfNursing/T4Utils) library.
 
-**Version 1.0.0_2016.09.15**
+## Latest Version
+
+### [v1.0.0_2016.09.15](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.0.0_2016.09.15)
 
 A complete port of the original [T4Utils](https://github.com/FPBSchoolOfNursing/T4Utils), optimized for TerminalFour Version 8.1. Here's what's new:
 * Cleaned up indentation, spacing, and Javascript formatting
