@@ -52,7 +52,7 @@ T4Utils.ordinalIndicators.pageFirst = (function() {
     var listContentTypeIDs = [];
     for (var j = 0; j < cL.length; j++) {
         var contentPiece = cL[j],
-            pieceID = contentPiece.getContentTypeID();
+            pieceID = contentPiece.getTemplateID();
         listContentTypeIDs.push({
             'key': pieceID,
             'pieces': []
@@ -62,7 +62,7 @@ T4Utils.ordinalIndicators.pageFirst = (function() {
     // Run through each piece of content, and put them in their corresponding key object
     for (var k = 0; k < cL.length; k++) {
         var cP = cL[k],
-            ctID = cP.getContentTypeID(),
+            ctID = cP.getTemplateID(),
             uID = cP.getID();
         for (var l = 0; l < listContentTypeIDs.length; l++) {
             var contentTypeID = listContentTypeIDs[l];
@@ -136,7 +136,7 @@ T4Utils.ordinalIndicators.pageLast = (function() {
     var listContentTypeIDs = [];
     for (var j = 0; j < cL.length; j++) {
         var contentPiece = cL[j],
-            pieceID = contentPiece.getContentTypeID();
+            pieceID = contentPiece.getTemplateID();
         listContentTypeIDs.push({
             'key': pieceID,
             'pieces': []
@@ -146,7 +146,7 @@ T4Utils.ordinalIndicators.pageLast = (function() {
     // Run through each piece of content, and put them in their corresponding key object
     for (var k = 0; k < cL.length; k++) {
         var cP = cL[k],
-            ctID = cP.getContentTypeID(),
+            ctID = cP.getTemplateID(),
             uID = cP.getID();
         for (var l = 0; l < listContentTypeIDs.length; l++) {
             var contentTypeID = listContentTypeIDs[l];
@@ -222,7 +222,7 @@ T4Utils.ordinalIndicators.pageIndex = (function() {
     var listContentTypeIDs = [];
     for (var j = 0; j < cL.length; j++) {
         var contentPiece = cL[j],
-            pieceID = contentPiece.getContentTypeID();
+            pieceID = contentPiece.getTemplateID();
         listContentTypeIDs.push({
             'key': pieceID,
             'pieces': []
@@ -232,7 +232,7 @@ T4Utils.ordinalIndicators.pageIndex = (function() {
     // Run through each piece of content, and put them in their corresponding key object
     for (var k = 0; k < cL.length; k++) {
         var cP = cL[k],
-            ctID = cP.getContentTypeID(),
+            ctID = cP.getTemplateID(),
             uID = cP.getID();
         for (var l = 0; l < listContentTypeIDs.length; l++) {
             var contentTypeID = listContentTypeIDs[l];
