@@ -1,6 +1,9 @@
 # Contribute to T4Utils 2
 Contributions to the T4Utils 2 library is strongly encouraged from TerminalFour community members to enhance and optimize this library. Before opening an issue or creating a pull request, please read through this documentation.
 
+## Issues
+When making an issue, please be as detailed as possible on the subject of your submission. If we cannot fully understand the issue you've submitted, we will request further clarification. If clarification cannot be provided within 5 days, the issue will be closed and we request you open a new issue.
+
 ## Linting
 As to make this project more accessible to other developers within the TerminalFour community, we've removed JSHint linting from the Gulp build system. This means that to ensure the library stays with a consistent and error/warning free codebase, we request all contributors to utilize a JSHint linter in their IDE of choice.
 
@@ -8,6 +11,7 @@ If a pull request is made with Javascript errors/warnings, we will immediately d
 
 ## Pull requests
 These instructions were inspired by [Bootstrap's](https://github.com/twbs/bootstrap/) pull request information within their [contribution guidelines](https://github.com/twbs/bootstrap/blob/master/CONTRIBUTING.md#pull-requests):
+
 1. [Fork](https://help.github.com/fork-a-repo/) the repo, clone your fork, and configure the remotes:
 ```bash
 # Clone your fork of the repo into the current directory
