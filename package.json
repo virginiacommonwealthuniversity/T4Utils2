@@ -1,6 +1,6 @@
 {
   "name": "t4-utils-2",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A Javascript Library of Utility Classes and Extensions for TerminalFour Programmable Layouts",
   "main": "dist/8.4/T4Utils.min.js",
   "author": "Joel Eisner <eisnerjr@vcu.edu>",
@@ -13,6 +13,7 @@
     "gulp": "^3.9.1",
     "gulp-header": "^1.8.8",
     "gulp-include": "^2.3.1",
+    "gulp-jsdoc3": "^0.3.0",
     "gulp-rename": "^1.2.2",
     "gulp-replace": "^0.5.4",
     "gulp-uglify": "^2.0.0"
