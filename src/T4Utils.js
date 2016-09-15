@@ -1,9 +1,3 @@
-//=include ./modules/dependencies.js
-//=include ./modules/base.js
-//=include ./modules/brokerUtils.js
-//=include ./modules/elementInfo.js
-//=include ./modules/getSectionInfo.js
-//=include ./modules/media.js
-//=include ./modules/ordinalIndicators.js
-//=include ./modules/security.js
-//=include ./modules/siteManager.js
+//=require ./modules/dependencies.js
+//=require ./modules/base.js
+//=require ./modules/*
