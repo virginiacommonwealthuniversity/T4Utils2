@@ -10,259 +10,141 @@
 T4Utils.ordinalIndicators = T4Utils.ordinalIndicators || {};
 
 /**
+ * Find the index of the context as well as the position of the content within context to the page if it is the first/last of its kind
+ * @function ordinalIndicators.pageInfo
+ * @returns {Object} an object containing boolean values for first/last as well as an integer value for index
+ * @example
+ * T4Utils.ordinalIndicators.pageInfo;
+ */
+T4Utils.ordinalIndicators.pageInfo = (function() {
+    // Define the returned variables
+    var pageFirst, pageIndex, pageLast;
+    // Create function to delete excess array objects if they have identical keys...
+    function unique(array) {
+        var comparer = function(a, b) {
+            return a.key === b.key ? 0 : a.key < b.key ? -1 : 1;
+        };
+        array.sort(comparer);
+        for (var i = 0; i < array.length - 1; ++i) {
+            if (comparer(array[i], array[i+1]) === 0) array.splice(i, 1);
+        }
+        return array;
+    }
+    // Grab all pieces of content on the page
+    var cL = com.terminalfour.sitemanager.cache.utils.CSHelper.extractCachedContent(                            /* Extract all cached content from the page where... */
+        com.terminalfour.sitemanager.cache.utils.CSHelper.removeSpecialContent(                                 /* ... deleted content is ignored... */
+            section.getContent(                                                                                 /* ... */
+                publishCache.getChannel(), 'en', com.terminalfour.sitemanager.cache.CachedContent.CURRENT, true /* ... and all other content is returned in the order as shown in SM */
+            )
+        )
+    );
+    // Define an array of key/pieces objects based on each unique content-type ID on the page
+    var listContentTypeIDs = [];
+    for (var j = 0; j < cL.length; j++) {
+        var contentPiece = cL[j],
+            pieceID = contentPiece.getTemplateID();
+        listContentTypeIDs.push({
+            key: pieceID,
+            pieces: []
+        });
+    }
+    unique(listContentTypeIDs);
+    // Run through each piece of content, and put them in their corresponding key object pieces array
+    for (var k = 0; k < cL.length; k++) {
+        var cP = cL[k],
+            ctID = cP.getTemplateID(),
+            uID = cP.getID();
+        for (var l = 0; l < listContentTypeIDs.length; l++) {
+            var contentTypeID = listContentTypeIDs[l];
+            if (ctID === contentTypeID.key) contentTypeID.pieces.push(uID);
+        }
+    }
+    // Get the current content's...
+    var this_ctID = content.getContentTypeID(), /* Content-type ID */
+        this_uID = content.getID();             /* Unique ID */
+    // For each key/pieces object...
+    for (var m = 0; m < listContentTypeIDs.length; m++) {
+        // ... create a reference, ...
+        var typeID = listContentTypeIDs[m];
+        // ... if the referenced object's key is equal to the current content's content-type ID...
+        if (typeID.key === this_ctID) {
+            // Define (of this content-type, in the scope of the entire page)...
+            var pieces = typeID.pieces,      /* All content */
+                pFirst = pieces[0],          /* The first piece of content */
+                pLength = pieces.length,     /* The amount of pieces of content */
+                pLast = pieces[pLength - 1]; /* The last piece of content */
+            // ... then assign values for pageFirst, pageLast, and pageIndex based on the previously defined variables
+            pageFirst = pFirst === this_uID ? true : false;
+            pageLast = pLast === this_uID ? true : false;
+            for (var n = 0; n < pLength; n++) {
+                var piece = pieces[n];
+                if (this_uID === piece) {
+                    pageIndex = n;
+                    break; /* Break */
+                }
+            }
+            break; /* Break */
+        }
+    }
+    // Return an object that contains...
+    return {
+        first: pageFirst, /* (Boolean) First of its kind on the page? */
+        index: pageIndex, /* (Integer) Position index of its kind on the page */
+        last: pageLast    /* (Boolean) Last of its kind on the page? */
+    };
+})();
+
+/**
  * Find if the position of the content within context to the page is the first of its kind
- * @function ordinalIndicators.pageFirst
+ * @member ordinalIndicators.pageFirst
  * @returns {Boolean} a boolean value; true if first, false if not
  * @example
  * T4Utils.ordinalIndicators.pageFirst;
  */
-T4Utils.ordinalIndicators.pageFirst = (function() {
-    var pageFirst = false;
-    // Create function to delete excess array objects if they have identical keys...
-    function unique(arr) {
-        var comparer = function compareObject(a, b) {
-            if (a.key === b.key) {
-                return 0;
-            } else {
-                if (a.key < b.key) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            }
-        };
-        arr.sort(comparer);
-        var end;
-        for (var i = 0; i < arr.length - 1; ++i) {
-            if (comparer(arr[i], arr[i+1]) === 0) {
-                arr.splice(i, 1);
-            }
-        }
-        return arr;
-    }
-    // Grab all pieces of content on the page
-    var cL = com.terminalfour.sitemanager.cache.utils.CSHelper.extractCachedContent(
-        com.terminalfour.sitemanager.cache.utils.CSHelper.removeSpecialContent(
-            section.getContent(
-                publishCache.getChannel(), 'en', com.terminalfour.sitemanager.cache.CachedContent.CURRENT, true
-            )
-        )
-    );
-    // Run through each piece of content, find out all the content types, and create a key array...
-    var listContentTypeIDs = [];
-    for (var j = 0; j < cL.length; j++) {
-        var contentPiece = cL[j],
-            pieceID = contentPiece.getTemplateID();
-        listContentTypeIDs.push({
-            'key': pieceID,
-            'pieces': []
-        });
-    }
-    unique(listContentTypeIDs);
-    // Run through each piece of content, and put them in their corresponding key object
-    for (var k = 0; k < cL.length; k++) {
-        var cP = cL[k],
-            ctID = cP.getTemplateID(),
-            uID = cP.getID();
-        for (var l = 0; l < listContentTypeIDs.length; l++) {
-            var contentTypeID = listContentTypeIDs[l];
-            if (ctID === contentTypeID.key) {
-                var p = contentTypeID.pieces;
-                p.push(uID);
-            }
-        }
-    }
-    // Get the current content type ID and unique ID
-    var this_ctID = content.getContentTypeID(),
-        this_uID = content.getID();
-    // Set the pageFirst and pageLast values
-    for (var m = 0; m < listContentTypeIDs.length; m++) {
-        var typeID = listContentTypeIDs[m];
-        // Find the current content piece in the array of all alike content on the page...
-        if (typeID.key === this_ctID) {
-            var pieces = typeID.pieces,
-            pFirst = pieces[0];
-            // If this piece of content is the first of its kind on the page...
-            if (pFirst === this_uID) {
-                pageFirst = true;
-            } else {
-                pageFirst = false;
-            }
-        }
-    }
-    return pageFirst;
-})();
-
-/**
- * Find if the position of the content within context to the page is the last of its kind
- * @function ordinalIndicators.pageLast
- * @returns {Boolean} a boolean value; true if last, false if not
- * @example
- * T4Utils.ordinalIndicators.pageLast;
- */
-T4Utils.ordinalIndicators.pageLast = (function() {
-    var pageLast = false;
-    // Create function to delete excess array objects if they have identical keys...
-    function unique(arr) {
-        var comparer = function compareObject(a, b) {
-            if (a.key === b.key) {
-                return 0;
-            } else {
-                if (a.key < b.key) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            }
-        };
-        arr.sort(comparer);
-        var end;
-        for (var i = 0; i < arr.length - 1; ++i) {
-            if (comparer(arr[i], arr[i+1]) === 0) {
-                arr.splice(i, 1);
-            }
-        }
-        return arr;
-    }
-    // Grab all pieces of content on the page
-    var cL = com.terminalfour.sitemanager.cache.utils.CSHelper.extractCachedContent(
-        com.terminalfour.sitemanager.cache.utils.CSHelper.removeSpecialContent(
-            section.getContent(
-                publishCache.getChannel(), 'en', com.terminalfour.sitemanager.cache.CachedContent.CURRENT, true
-            )
-        )
-    );
-    // Run through each piece of content, find out all the content types, and create a key array...
-    var listContentTypeIDs = [];
-    for (var j = 0; j < cL.length; j++) {
-        var contentPiece = cL[j],
-            pieceID = contentPiece.getTemplateID();
-        listContentTypeIDs.push({
-            'key': pieceID,
-            'pieces': []
-        });
-    }
-    unique(listContentTypeIDs);
-    // Run through each piece of content, and put them in their corresponding key object
-    for (var k = 0; k < cL.length; k++) {
-        var cP = cL[k],
-            ctID = cP.getTemplateID(),
-            uID = cP.getID();
-        for (var l = 0; l < listContentTypeIDs.length; l++) {
-            var contentTypeID = listContentTypeIDs[l];
-            if (ctID === contentTypeID.key) {
-                var p = contentTypeID.pieces;
-                p.push(uID);
-            }
-        }
-    }
-    // Get the current content type ID and unique ID
-    var this_ctID = content.getContentTypeID(),
-        this_uID = content.getID();
-    // Set the pageFirst and pageLast values
-    for (var m = 0; m < listContentTypeIDs.length; m++) {
-        var typeID = listContentTypeIDs[m];
-        // Find the current content piece in the array of all alike content on the page...
-        if (typeID.key === this_ctID) {
-            var pieces = typeID.pieces,
-            pLength = pieces.length,
-            pIndex = pLength - 1,
-            pLast = pieces[pIndex];
-            // If this piece of content is the last of its kind on the page...
-            if (pLast === this_uID) {
-                pageLast = true;
-            } else {
-                pageLast = false;
-            }
-        }
-    }
-    return pageLast;
-})();
+T4Utils.ordinalIndicators.pageFirst = T4Utils.ordinalIndicators.pageInfo.first;
 
 /**
  * Find the index of the content within context to the page
- * @function ordinalIndicators.pageIndex
+ * @member ordinalIndicators.pageIndex
  * @returns {Number} a integer representing the contents positon on the page (starts from 0)
  * @example
  * T4Utils.ordinalIndicators.pageIndex;
  */
-T4Utils.ordinalIndicators.pageIndex = (function() {
-    var contentIndex;
-    // Create function to delete excess array objects if they have identical keys...
-    function unique(arr) {
-        var comparer = function compareObject(a, b) {
-            if (a.key === b.key) {
-                return 0;
-            } else {
-                if (a.key < b.key) {
-                    return -1;
-                } else {
-                    return 1;
-                }
-            }
-        };
-        arr.sort(comparer);
-        var end;
-        for (var i = 0; i < arr.length - 1; ++i) {
-            if (comparer(arr[i], arr[i+1]) === 0) {
-                arr.splice(i, 1);
-            }
-        }
-        return arr;
-    }
-    // Grab all pieces of content on the page
-    var cL = com.terminalfour.sitemanager.cache.utils.CSHelper.extractCachedContent(
-        com.terminalfour.sitemanager.cache.utils.CSHelper.removeSpecialContent(
-            section.getContent(
-                publishCache.getChannel(), 'en', com.terminalfour.sitemanager.cache.CachedContent.CURRENT, true
-            )
-        )
-    );
-    // Run through each piece of content, find out all the content types, and create a key array...
-    var listContentTypeIDs = [];
-    for (var j = 0; j < cL.length; j++) {
-        var contentPiece = cL[j],
-            pieceID = contentPiece.getTemplateID();
-        listContentTypeIDs.push({
-            'key': pieceID,
-            'pieces': []
-        });
-    }
-    unique(listContentTypeIDs);
-    // Run through each piece of content, and put them in their corresponding key object
-    for (var k = 0; k < cL.length; k++) {
-        var cP = cL[k],
-            ctID = cP.getTemplateID(),
-            uID = cP.getID();
-        for (var l = 0; l < listContentTypeIDs.length; l++) {
-            var contentTypeID = listContentTypeIDs[l];
-            if (ctID === contentTypeID.key) {
-                var p = contentTypeID.pieces;
-                p.push(uID);
-            }
+T4Utils.ordinalIndicators.pageIndex = T4Utils.ordinalIndicators.pageInfo.index;
+
+/**
+ * Find if the position of the content within context to the page is the last of its kind
+ * @member ordinalIndicators.pageLast
+ * @returns {Boolean} a boolean value; true if last, false if not
+ * @example
+ * T4Utils.ordinalIndicators.pageLast;
+ */
+T4Utils.ordinalIndicators.pageLast = T4Utils.ordinalIndicators.pageInfo.last;
+
+/**
+ * Find if the position of the content within context to a group of the same content-type is the first/last of its kind
+ * @function ordinalIndicators.groupInfo
+ * @returns {Object} an object containing boolean values for first/last
+ * @example
+ * T4Utils.ordinalIndicators.groupInfo;
+ */
+T4Utils.ordinalIndicators.groupInfo = (function() {
+    var ctid = content.getContentTypeID(),
+        sid = section.getID(),
+        oCH = new ContentHierarchy(),
+        oCM = com.terminalfour.spring.ApplicationContextProvider.getBean(com.terminalfour.content.IContentManager),
+        contentInSection = oCH.getContent(dbStatement, sid, 'en'),
+        groupFirst, groupLast;
+    for (var i = 0; i < contentInSection.length; i++) {
+        if (content.getID() === oCM.get(contentInSection[i], 'en').getID()) {
+            groupFirst = i === 0 ? true : ctid !== oCM.get(contentInSection[i - 1], 'en').getContentTypeID() ? true : false;
+            groupLast = i === contentInSection.length - 1 ? true : ctid !== oCM.get(contentInSection[i + 1], 'en').getContentTypeID() ? true : false;
         }
     }
-    // Get the current content type ID and unique ID
-    var this_ctID = content.getContentTypeID(),
-        this_uID = content.getID();
-    // Set the pageFirst and pageLast values
-    for (var m = 0; m < listContentTypeIDs.length; m++) {
-        var typeID = listContentTypeIDs[m];
-        // Find the current content piece in the array of all alike content on the page...
-        if (typeID.key === this_ctID) {
-            var pieces = typeID.pieces,
-            pLength = pieces.length;
-            // Set the contentIndex variable...
-            for (var n = 0; n < pLength; n++) {
-                var piece = pieces[n];
-                if (this_uID === piece) {
-                    contentIndex = n;
-                    break;
-                }
-            }
-        }
-    }
-    return contentIndex;
+    return {
+        first: groupFirst,
+        last: groupLast
+    };
 })();
 
 /**
@@ -272,26 +154,7 @@ T4Utils.ordinalIndicators.pageIndex = (function() {
  * @example
  * T4Utils.ordinalIndicators.groupFirst;
  */
-T4Utils.ordinalIndicators.groupFirst = (function() {
-    var ctid = content.getContentTypeID(),
-        sid = section.getID(),
-        oCH = new ContentHierarchy(),
-        oCM = com.terminalfour.spring.ApplicationContextProvider.getBean(com.terminalfour.content.IContentManager),
-        contentInSection = oCH.getContent(dbStatement, sid, 'en'),
-        groupFirst = false;
-    for (var i = 0; i < contentInSection.length; i++) {
-        if (content.getID() === oCM.get(contentInSection[i], 'en').getID()) {
-            if (i === 0) {
-                groupFirst = true;
-            } else if (ctid !==  oCM.get(contentInSection[i - 1], 'en').getContentTypeID()) {
-                groupFirst = true;
-            } else {
-                groupFirst = false;
-            }
-        }
-    }
-    return groupFirst;
-})();
+T4Utils.ordinalIndicators.groupFirst = T4Utils.ordinalIndicators.groupInfo.first;
 
 /**
  * Find if the position of the content within context to a group of the same content-type is the last of its kind
@@ -300,23 +163,4 @@ T4Utils.ordinalIndicators.groupFirst = (function() {
  * @example
  * T4Utils.ordinalIndicators.groupLast;
  */
-T4Utils.ordinalIndicators.groupLast = (function() {
-    var ctid = content.getContentTypeID(),
-        sid = section.getID(),
-        oCH = new ContentHierarchy(),
-        oCM = com.terminalfour.spring.ApplicationContextProvider.getBean(com.terminalfour.content.IContentManager),
-        contentInSection = oCH.getContent(dbStatement, sid, 'en'),
-        groupLast = false;
-    for (var i = 0; i < contentInSection.length; i++) {
-        if (content.getID() === oCM.get(contentInSection[i], 'en').getID()) {
-            if (i === contentInSection.length-1) {
-                groupLast = true;
-            } else if (ctid !==  oCM.get(contentInSection[i + 1], 'en').getContentTypeID()) {
-                groupLast = true;
-            } else {
-                groupLast = false;
-            }
-        }
-    }
-    return groupLast;
-})();
+T4Utils.ordinalIndicators.groupLast = T4Utils.ordinalIndicators.groupInfo.last;
