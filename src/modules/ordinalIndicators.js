@@ -18,7 +18,7 @@ T4Utils.ordinalIndicators = T4Utils.ordinalIndicators || {};
  */
 T4Utils.ordinalIndicators.pageInfo = (function() {
     // Define the returned variables
-    var pageFirst, pageIndex, pageLast;
+    var pageCount, pageFirst, pageIndex, pageLast;
     // Create function to delete excess array objects if they have identical keys...
     function unique(array) {
         var comparer = function(a, b) {
@@ -73,7 +73,8 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
                 pFirst = pieces[0],          /* The first piece of content */
                 pLength = pieces.length,     /* The amount of pieces of content */
                 pLast = pieces[pLength - 1]; /* The last piece of content */
-            // ... then assign values for pageFirst, pageLast, and pageIndex based on the previously defined variables
+            // ... then assign values for pageCount, pageFirst, pageLast, and pageIndex based on the previously defined variables
+            pageCount = pLength;
             pageFirst = pFirst === this_uID ? true : false;
             pageLast = pLast === this_uID ? true : false;
             for (var n = 0; n < pLength; n++) {
@@ -88,11 +89,21 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
     }
     // Return an object that contains...
     return {
+        count: pageCount,
         first: pageFirst, /* (Boolean) First of its kind on the page? */
         index: pageIndex, /* (Integer) Position index of its kind on the page */
         last: pageLast    /* (Boolean) Last of its kind on the page? */
     };
 })();
+
+/**
+ * Find how many pieces of content of the same kind are on the page
+ * @member ordinalIndicators.pageCount
+ * @returns {Number} an integer representing the amount of pieces of content of the same kind on the page
+ * @example
+ * T4Utils.ordinalIndicators.pageCount;
+ */
+T4Utils.ordinalIndicators.pageCount = T4Utils.ordinalIndicators.pageInfo.count;
 
 /**
  * Find if the position of the content within context to the page is the first of its kind
