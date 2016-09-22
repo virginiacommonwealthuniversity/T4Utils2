@@ -1,6 +1,10 @@
 # Changelog
 T4Utils 2 utilizes [GitHub's releases feature](https://github.com/blog/1547-release-your-software) for its changelogs, but this document serves as static duplicate of that content.
 
+##[v1.2.1_2016.09.22 - Ordinal Indicators - pageCount](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.2.1_2016.09.22)
+A new `pageCount` member variable has been added to `ordinalIndicators`.
+* Returns the amount of content (of the kind in which the variable is called) on the page
+
 ## [v1.2.0_2016.09.16 - Ordinal Indicators Optimization](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.2.0_2016.09.16)
 `ordinalIndicators` have been optimized in a few ways for speed and efficiency, and new features have been added. Here's what's changed:
 * New functions `pageInfo` and `groupInfo` have been added
