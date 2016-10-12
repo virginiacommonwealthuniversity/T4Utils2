@@ -3,11 +3,13 @@
 # T4Utils 2
 A Javascript library of utility classes and extensions for TerminalFour Programmable Layouts. This repo is a port/continuation of [Ben Margevicius'](https://github.com/bdm4) unmaintained [T4Utils](https://github.com/FPBSchoolOfNursing/T4Utils) library.
 
-## Latest version
+## Latest Version
 
-##[v1.2.1_2016.09.22 - Ordinal Indicators - pageCount](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.2.1_2016.09.22)
-A new `pageCount` member variable has been added to `ordinalIndicators`.
-* Returns the amount of content (of the kind in which the variable is called) on the page
+## [v1.3.0_2016.10.12 - Ordinal Indicators Failsafe](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.3.0_2016.10.12)
+A new failsafe has been added to `ordinalIndicators` to allow for the entire library to be used within page layouts. Here's what's changed:
+* All code within pageInfo/groupInfo has been wrapped in a conditional checking to see if the global variable `content` is undefined
+    * If `content` is defined, the self-executing functions will run as expected
+    * If `content` is undefined, the self-executing functions will return objects with null key/value pairs
 
 Check out the [changelog](changelog.md) for previous release information.
 
