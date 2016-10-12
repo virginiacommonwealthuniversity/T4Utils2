@@ -3,14 +3,14 @@
  * @namespace ordinalIndicators
  * @extends T4Utils
  * @author Joel Eisner <eisnerjr@vcu.edu>
- * @version 1.0.0
+ * @version 1.1.0
  * @example
  * T4Utils.ordinalIndicators
  */
 T4Utils.ordinalIndicators = T4Utils.ordinalIndicators || {};
 
 /**
- * Find the index of the context as well as the position of the content within context to the page if it is the first/last of its kind
+ * Find the index of the content as well as the position of the content within context to the page if it is the first/last of its kind
  * @function ordinalIndicators.pageInfo
  * @returns {Object} an object containing boolean values for first/last as well as an integer value for index
  * @example
@@ -30,68 +30,78 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
         }
         return array;
     }
-    // Grab all pieces of content on the page
-    var cL = com.terminalfour.sitemanager.cache.utils.CSHelper.extractCachedContent(                            /* Extract all cached content from the page where... */
-        com.terminalfour.sitemanager.cache.utils.CSHelper.removeSpecialContent(                                 /* ... deleted content is ignored... */
-            section.getContent(                                                                                 /* ... */
-                publishCache.getChannel(), 'en', com.terminalfour.sitemanager.cache.CachedContent.CURRENT, true /* ... and all other content is returned in the order as shown in SM */
+    // If content is defined...
+    if (typeof content !== 'undefined') {
+        // Grab all pieces of content on the page
+        var cL = com.terminalfour.sitemanager.cache.utils.CSHelper.extractCachedContent(                            /* Extract all cached content from the page where... */
+            com.terminalfour.sitemanager.cache.utils.CSHelper.removeSpecialContent(                                 /* ... deleted content is ignored... */
+                section.getContent(                                                                                 /* ... */
+                    publishCache.getChannel(), 'en', com.terminalfour.sitemanager.cache.CachedContent.CURRENT, true /* ... and all other content is returned in the order as shown in SM */
+                )
             )
-        )
-    );
-    // Define an array of key/pieces objects based on each unique content-type ID on the page
-    var listContentTypeIDs = [];
-    for (var j = 0; j < cL.length; j++) {
-        var contentPiece = cL[j],
-            pieceID = contentPiece.getTemplateID();
-        listContentTypeIDs.push({
-            key: pieceID,
-            pieces: []
-        });
-    }
-    unique(listContentTypeIDs);
-    // Run through each piece of content, and put them in their corresponding key object pieces array
-    for (var k = 0; k < cL.length; k++) {
-        var cP = cL[k],
-            ctID = cP.getTemplateID(),
-            uID = cP.getID();
-        for (var l = 0; l < listContentTypeIDs.length; l++) {
-            var contentTypeID = listContentTypeIDs[l];
-            if (ctID === contentTypeID.key) contentTypeID.pieces.push(uID);
+        );
+        // Define an array of key/pieces objects based on each unique content-type ID on the page
+        var listContentTypeIDs = [];
+        for (var j = 0; j < cL.length; j++) {
+            var contentPiece = cL[j],
+                pieceID = contentPiece.getTemplateID();
+            listContentTypeIDs.push({
+                key: pieceID,
+                pieces: []
+            });
         }
-    }
-    // Get the current content's...
-    var this_ctID = content.getContentTypeID(), /* Content-type ID */
-        this_uID = content.getID();             /* Unique ID */
-    // For each key/pieces object...
-    for (var m = 0; m < listContentTypeIDs.length; m++) {
-        // ... create a reference, ...
-        var typeID = listContentTypeIDs[m];
-        // ... if the referenced object's key is equal to the current content's content-type ID...
-        if (typeID.key === this_ctID) {
-            // Define (of this content-type, in the scope of the entire page)...
-            var pieces = typeID.pieces,      /* All content */
-                pFirst = pieces[0],          /* The first piece of content */
-                pLength = pieces.length,     /* The amount of pieces of content */
-                pLast = pieces[pLength - 1]; /* The last piece of content */
-            // ... then assign values for pageFirst, pageLast, and pageIndex based on the previously defined variables
-            pageFirst = pFirst === this_uID ? true : false;
-            pageLast = pLast === this_uID ? true : false;
-            for (var n = 0; n < pLength; n++) {
-                var piece = pieces[n];
-                if (this_uID === piece) {
-                    pageIndex = n;
-                    break; /* Break */
-                }
+        unique(listContentTypeIDs);
+        // Run through each piece of content, and put them in their corresponding key object pieces array
+        for (var k = 0; k < cL.length; k++) {
+            var cP = cL[k],
+                ctID = cP.getTemplateID(),
+                uID = cP.getID();
+            for (var l = 0; l < listContentTypeIDs.length; l++) {
+                var contentTypeID = listContentTypeIDs[l];
+                if (ctID === contentTypeID.key) contentTypeID.pieces.push(uID);
             }
-            break; /* Break */
         }
+        // Get the current content's...
+        var this_ctID = content.getContentTypeID(), /* Content-type ID */
+            this_uID = content.getID();             /* Unique ID */
+        // For each key/pieces object...
+        for (var m = 0; m < listContentTypeIDs.length; m++) {
+            // ... create a reference, ...
+            var typeID = listContentTypeIDs[m];
+            // ... if the referenced object's key is equal to the current content's content-type ID...
+            if (typeID.key === this_ctID) {
+                // Define (of this content-type, in the scope of the entire page)...
+                var pieces = typeID.pieces,      /* All content */
+                    pFirst = pieces[0],          /* The first piece of content */
+                    pLength = pieces.length,     /* The amount of pieces of content */
+                    pLast = pieces[pLength - 1]; /* The last piece of content */
+                // ... then assign values for pageFirst, pageLast, and pageIndex based on the previously defined variables
+                pageFirst = pFirst === this_uID ? true : false;
+                pageLast = pLast === this_uID ? true : false;
+                for (var n = 0; n < pLength; n++) {
+                    var piece = pieces[n];
+                    if (this_uID === piece) {
+                        pageIndex = n;
+                        break; /* Break */
+                    }
+                }
+                break; /* Break */
+            }
+        }
+        // Return an object that contains...
+        return {
+            first: pageFirst, /* (Boolean) First of its kind on the page? */
+            index: pageIndex, /* (Integer) Position index of its kind on the page */
+            last: pageLast    /* (Boolean) Last of its kind on the page? */
+        };
+    } else {
+        // ... otherwise, return an object that contains null key/value pairs
+        return {
+            first: null,
+            index: null,
+            last: null
+        };
     }
-    // Return an object that contains...
-    return {
-        first: pageFirst, /* (Boolean) First of its kind on the page? */
-        index: pageIndex, /* (Integer) Position index of its kind on the page */
-        last: pageLast    /* (Boolean) Last of its kind on the page? */
-    };
 })();
 
 /**
@@ -129,22 +139,32 @@ T4Utils.ordinalIndicators.pageLast = T4Utils.ordinalIndicators.pageInfo.last;
  * T4Utils.ordinalIndicators.groupInfo;
  */
 T4Utils.ordinalIndicators.groupInfo = (function() {
-    var ctid = content.getContentTypeID(),
-        sid = section.getID(),
-        oCH = new ContentHierarchy(),
-        oCM = com.terminalfour.spring.ApplicationContextProvider.getBean(com.terminalfour.content.IContentManager),
-        contentInSection = oCH.getContent(dbStatement, sid, 'en'),
-        groupFirst, groupLast;
-    for (var i = 0; i < contentInSection.length; i++) {
-        if (content.getID() === oCM.get(contentInSection[i], 'en').getID()) {
-            groupFirst = i === 0 ? true : ctid !== oCM.get(contentInSection[i - 1], 'en').getContentTypeID() ? true : false;
-            groupLast = i === contentInSection.length - 1 ? true : ctid !== oCM.get(contentInSection[i + 1], 'en').getContentTypeID() ? true : false;
+    // If content is defined...
+    if (typeof content !== 'undefined') {
+        var ctid = content.getContentTypeID(),
+            sid = section.getID(),
+            oCH = new ContentHierarchy(),
+            oCM = com.terminalfour.spring.ApplicationContextProvider.getBean(com.terminalfour.content.IContentManager),
+            contentInSection = oCH.getContent(dbStatement, sid, 'en'),
+            groupFirst, groupLast;
+        for (var i = 0; i < contentInSection.length; i++) {
+            if (content.getID() === oCM.get(contentInSection[i], 'en').getID()) {
+                groupFirst = i === 0 ? true : ctid !== oCM.get(contentInSection[i - 1], 'en').getContentTypeID() ? true : false;
+                groupLast = i === contentInSection.length - 1 ? true : ctid !== oCM.get(contentInSection[i + 1], 'en').getContentTypeID() ? true : false;
+            }
         }
+        // Return an object that contains...
+        return {
+            first: groupFirst, /* (Boolean) First of its kind in a group? */
+            last: groupLast    /* (Boolean) Last of its kind in a group? */
+        };
+    } else {
+        // ... otherwise, return an object that contains null key/value pairs
+        return {
+            first: null,
+            last: null
+        };
     }
-    return {
-        first: groupFirst,
-        last: groupLast
-    };
 })();
 
 /**
