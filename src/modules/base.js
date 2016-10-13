@@ -2,7 +2,7 @@
  * T4Utils
  * @module
  * @author Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
- * @version 1.0.0
+ * @version 1.1.0
  */
 var T4Utils = (function (utils) {
 
@@ -76,6 +76,38 @@ var T4Utils = (function (utils) {
             document.write("<script>console.error('" + textOrObj + "');</script>\n");
         }
     };
+
+    /**
+     * Sets the context of where the library is being executed from (i.e. null if from within a page-layout, content if from within a content-type)
+     * @member context
+     * @return {?Object} context - Either null if the context is from within a page-layout, and the content variable if from withing a content-type
+     * T4Utils.context
+     */
+    utils.context = (function () {
+        return typeof content == 'undefined' ? null : content;
+    })();
+
+    /**
+     * Boolean of whether the context of where the library is being executed from is within a page-layout
+     * @member contextIsPage
+     * @return {boolean} context - True if the library is executed within a page-layout, false if not
+     * @example
+     * T4Utils.contextIsPage
+     */
+    utils.contextIsPage = (function () {
+        return typeof content == 'undefined' ? true : false;
+    })();
+
+    /**
+     * Boolean of whether the context of where the library is being executed from is within a content-type
+     * @member contextIsContent
+     * @return {boolean} context - True if the library is executed within a content-type, false if not
+     * @example
+     * T4Utils.contextIsContent
+     */
+    utils.contextIsContent = (function () {
+        return typeof content == 'undefined' ? false : true;
+    })();
 
     /**
      * Writes a paragraph formatted HTML message to the browser
