@@ -2,8 +2,8 @@
  * brokerUtils - The Broker Utilities Module
  * @namespace brokerUtils
  * @extends T4Utils
- * @author Ben Margevicius <bdm4@case.edu>
- * @version 1.0.0
+ * @author Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
+ * @version 1.1.0
  * @example
  * T4Utils.brokerUtils
  */
@@ -18,6 +18,5 @@ T4Utils.brokerUtils = T4Utils.brokerUtils || {};
  * T4Utils.brokerUtils.processT4tag(string);
  */
 T4Utils.brokerUtils.processT4Tag = function (t4Tag) {
-    var context = content || null;
-    return com.terminalfour.publish.utils.BrokerUtils.processT4Tags(dbStatement, publishCache, section, context, language, isPreview, t4Tag);
+    return com.terminalfour.publish.utils.BrokerUtils.processT4Tags(dbStatement, publishCache, section, T4Utils.context, language, isPreview, t4Tag);
 };

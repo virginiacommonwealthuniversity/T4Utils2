@@ -1,6 +1,13 @@
 # Changelog
 T4Utils 2 utilizes [GitHub's releases feature](https://github.com/blog/1547-release-your-software) for its changelogs, but this document serves as static duplicate of that content.
 
+## [v1.3.1_2016.10.13 - Global Context Variables](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.3.1_2016.10.13)
+Issues related to the `var context = content || null;` problem within page-layouts have been solved. Here's how:
+* In page-layouts, the original way of calculating context errors out. The following logic works and will be utilized: `var context = typeof content == 'undefined' ? null : content;`
+* All new `context`, `contextIsPage` and `contextIsContent` member variables have been added to the base `T4Utils` object
+    * This ensures that the context is defined globally at the start of the library
+    * The modules `brokerUtils`, `elementInfo` and `ordinalIndicators` now utilize these member variables in their logic
+
 ## [v1.3.0_2016.10.12 - Ordinal Indicators Failsafe](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.3.0_2016.10.12)
 A new failsafe has been added to `ordinalIndicators` to allow for the entire library to be used within page layouts. Here's what's changed:
 * All code within pageInfo/groupInfo has been wrapped in a conditional checking to see if the global variable `content` is undefined

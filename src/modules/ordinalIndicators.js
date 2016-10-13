@@ -31,7 +31,7 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
         return array;
     }
     // If content is defined...
-    if (typeof content !== 'undefined') {
+    if (T4Utils.contextIsContent) {
         // Grab all pieces of content on the page
         var cL = com.terminalfour.sitemanager.cache.utils.CSHelper.extractCachedContent(                            /* Extract all cached content from the page where... */
             com.terminalfour.sitemanager.cache.utils.CSHelper.removeSpecialContent(                                 /* ... deleted content is ignored... */
@@ -152,7 +152,7 @@ T4Utils.ordinalIndicators.pageLast = T4Utils.ordinalIndicators.pageInfo.last;
  */
 T4Utils.ordinalIndicators.groupInfo = (function() {
     // If content is defined...
-    if (typeof content !== 'undefined') {
+    if (T4Utils.contextIsContent) {
         var ctid = content.getContentTypeID(),
             sid = section.getID(),
             oCH = new ContentHierarchy(),
