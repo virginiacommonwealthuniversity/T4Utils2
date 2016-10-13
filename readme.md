@@ -5,11 +5,12 @@ A Javascript library of utility classes and extensions for TerminalFour Programm
 
 ## Latest Version
 
-## [v1.3.0_2016.10.12 - Ordinal Indicators Failsafe](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.3.0_2016.10.12)
-A new failsafe has been added to `ordinalIndicators` to allow for the entire library to be used within page layouts. Here's what's changed:
-* All code within pageInfo/groupInfo has been wrapped in a conditional checking to see if the global variable `content` is undefined
-    * If `content` is defined, the self-executing functions will run as expected
-    * If `content` is undefined, the self-executing functions will return objects with null key/value pairs
+## [v1.3.1_2016.10.13 - Global Context Variables](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.3.1_2016.10.13)
+Issues related to the `var context = content || null;` problem within page-layouts have been solved. Here's how:
+* In page-layouts, the original way of calculating context errors out. The following logic works and will be utilized: `var context = typeof content == 'undefined' ? null : content;`
+* All new `context`, `contextIsPage` and `contextIsContent` member variables have been added to the base `T4Utils` object
+    * This ensures that the context is defined globally at the start of the library
+    * The modules `brokerUtils`, `elementInfo` and `ordinalIndicators` now utilize these member variables in their logic
 
 Check out the [changelog](changelog.md) for previous release information.
 
