@@ -2,7 +2,7 @@
  * T4Utils
  * @module
  * @author Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
- * @version 1.1.0
+ * @version 1.2.0
  */
 var T4Utils = (function (utils) {
 
@@ -13,7 +13,7 @@ var T4Utils = (function (utils) {
      * @example
      * T4Utils.version;
      */
-    utils.version = '{{version}}_{{datestamp}}';
+    utils.version = '{{version}}_{{t4_version}}_{{datestamp}}';
 
     /**
      * The version of TerminalFour this library is intended for
@@ -22,7 +22,7 @@ var T4Utils = (function (utils) {
      * @example
      * T4Utils.t4;
      */
-    utils.t4 = '8.1';
+    utils.t4 = '{{t4_version}}';
 
     /**
      * Writes the specified message type to the browser console
