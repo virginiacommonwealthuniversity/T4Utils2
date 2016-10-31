@@ -3,7 +3,7 @@
  * @namespace ordinalIndicators
  * @extends T4Utils
  * @author Joel Eisner <eisnerjr@vcu.edu>
- * @version 1.1.0
+ * @version 1.2.0
  * @example
  * T4Utils.ordinalIndicators
  */
@@ -61,9 +61,9 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
                 if (ctID === contentTypeID.key) contentTypeID.pieces.push(uID);
             }
         }
-        // Get the current content's...
-        var this_ctID = content.getContentTypeID(), /* Content-type ID */
-            this_uID = content.getID();             /* Unique ID */
+        // Get the current content's content-type and unique ID's
+        var this_ctID = '{{api:content_type_id}}',
+            this_uID = content.getID();
         // For each key/pieces object...
         for (var m = 0; m < listContentTypeIDs.length; m++) {
             // ... create a reference, ...
@@ -153,16 +153,16 @@ T4Utils.ordinalIndicators.pageLast = T4Utils.ordinalIndicators.pageInfo.last;
 T4Utils.ordinalIndicators.groupInfo = (function() {
     // If content is defined...
     if (T4Utils.contextIsContent) {
-        var ctid = content.getContentTypeID(),
+        var ctid = '{{api:content_type_id}}',
             sid = section.getID(),
             oCH = new ContentHierarchy(),
-            oCM = com.terminalfour.spring.ApplicationContextProvider.getBean(com.terminalfour.content.IContentManager),
+            oCM = '{{api:ocm}}',
             contentInSection = oCH.getContent(dbStatement, sid, 'en'),
             groupFirst, groupLast;
         for (var i = 0; i < contentInSection.length; i++) {
-            if (content.getID() === oCM.get(contentInSection[i], 'en').getID()) {
-                groupFirst = i === 0 ? true : ctid !== oCM.get(contentInSection[i - 1], 'en').getContentTypeID() ? true : false;
-                groupLast = i === contentInSection.length - 1 ? true : ctid !== oCM.get(contentInSection[i + 1], 'en').getContentTypeID() ? true : false;
+            if (content.getID() === '{{api:ocm_get_id}}') {
+                groupFirst = i === 0 ? true : ctid !== '{{api:ocm_prev_content_type_id}}' ? true : false;
+                groupLast = i === contentInSection.length - 1 ? true : ctid !== '{{api:ocm_next_content_type_id}}' ? true : false;
             }
         }
         // Return an object that contains...
