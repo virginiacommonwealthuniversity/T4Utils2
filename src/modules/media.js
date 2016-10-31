@@ -18,9 +18,12 @@ T4Utils.media = T4Utils.media || {};
  * T4Utils.media.getImageVariantsIds(media);
  */
 T4Utils.media.getImageVariantsIds = function (mediaElement) {
-    var imageID = content.get(mediaElement).getID(),
-        variantIds = MediaManager.getManager().getMediaVariants(dbStatement.getConnection(), imageID, language);
-    return variantIds;
+    if (T4Utils.contextIsContent) {
+        var imageID = content.get(mediaElement).getID(),
+            variantIds = MediaManager.getManager().getMediaVariants(dbStatement.getConnection(), imageID, language);
+        return variantIds;
+    }
+    return null;
 };
 
 /**
