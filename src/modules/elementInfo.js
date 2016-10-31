@@ -50,7 +50,7 @@ T4Utils.elementInfo.getElementName = function (element) {
     if (T4Utils.contextIsContent) {
         var el = content.get(element);
         if (typeof el.getName === "function") {
-            return c.get(element).getName();
+            return el.getName();
         }
     }
     return null;
@@ -68,7 +68,7 @@ T4Utils.elementInfo.getElementID = function (element) {
     if (T4Utils.contextIsContent) {
         var el = content.get(element);
         if (typeof el.getID === "function") {
-            return c.getID();
+            return el.getID();
         }
     }
     return null;

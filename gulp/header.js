@@ -4,19 +4,20 @@ var datestamp = require('./datestamp.js'),
     pkg = require('../package.json');
 
 // Export
-module.exports = function() {
+module.exports = function(version) {
     // Define banner structure
     var banner = [
         '/**',
         ' * T4Utils 2',
         ' * @author <%= pkg.author %>',
-        ' * @version <%= pkg.version %>_<%= info.date %>',
+        ' * @version <%= pkg.version %>_<%= info.version %>_<%= info.date %>',
         ' * @license <%= pkg.license %>',
         ' */',
         '\n'
     ].join('\n');
     // Define the build information
     var info = {
+        version: version,
         date: datestamp()
     };
     // Return

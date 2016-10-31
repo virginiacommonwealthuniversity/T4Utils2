@@ -1,6 +1,15 @@
 # Changelog
 T4Utils 2 utilizes [GitHub's releases feature](https://github.com/blog/1547-release-your-software) for its changelogs, but this document serves as static duplicate of that content.
 
+## [v1.4.0_2016.10.31 - v7.4 Support](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.4.0_2016.10.31)
+T4Utils2 now officially supports both TerminalFour v7.4 and v8.1. Here's what's changed:
+* The Gulp build system now compiles 2 versions of the library (for TerminalFour v7.4 and v8.1)
+    * The main `gulpfile.js` now uses a build module to simplify and bootstrap library compilation code
+* The `ordinalIndicators` module now uses replaceable strings for any v7.1/v8.1 API discrepancies
+    * These replaceable strings are changed to the correct API calls during the build process
+* The `elementInfo` module has had undefined variable issues fixed
+* The `media` module's `getImageVariantsIds` method is now wrapped in a `T4Utils.contextIsContent` conditional
+
 ## [v1.3.1_2016.10.13 - Global Context Variables](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.3.1_2016.10.13)
 Issues related to the `var context = content || null;` problem within page-layouts have been solved. Here's how:
 * In page-layouts, the original way of calculating context errors out. The following logic works and will be utilized: `var context = typeof content == 'undefined' ? null : content;`
