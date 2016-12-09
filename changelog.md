@@ -1,6 +1,17 @@
 # Changelog
 T4Utils 2 utilizes [GitHub's releases feature](https://github.com/blog/1547-release-your-software) for its changelogs, but this document serves as static duplicate of that content.
 
+## [v1.5.0_2016.12.09 - generateT4Tag()](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.0_2016.12.09)
+The `brokerUtils` module has been extended to include `generateT4Tag()`!
+* Create/process T4 tags by passing in a configuration object
+* Defaults are established to simplify configuration object creation
+    * type      - "content"
+    * name      - ""
+    * output    - "normal"
+    * modifiers - []
+    * id        - 0
+    * formatter - ""
+
 ## [v1.4.0_2016.10.31 - v7.4 Support](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.4.0_2016.10.31)
 T4Utils2 now officially supports both TerminalFour v7.4 and v8.1. Here's what's changed:
 * The Gulp build system now compiles 2 versions of the library (for TerminalFour v7.4 and v8.1)
