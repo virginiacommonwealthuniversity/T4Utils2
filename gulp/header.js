@@ -10,7 +10,7 @@ module.exports = function(version) {
         '/**',
         ' * T4Utils 2',
         ' * @author <%= pkg.author %>',
-        ' * @version <%= pkg.version %>_<%= info.version %>_<%= info.date %>',
+        ' * @version <%= pkg.version %>_<%= info.date %> (<%= info.version %>)',
         ' * @license <%= pkg.license %>',
         ' */',
         '\n'

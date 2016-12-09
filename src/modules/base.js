@@ -13,7 +13,7 @@ var T4Utils = (function (utils) {
      * @example
      * T4Utils.version;
      */
-    utils.version = '{{version}}_{{t4_version}}_{{datestamp}}';
+    utils.version = '{{version}}_{{datestamp}}';
 
     /**
      * The version of TerminalFour this library is intended for
