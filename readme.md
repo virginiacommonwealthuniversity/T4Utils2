@@ -5,14 +5,16 @@ A Javascript library of utility classes and extensions for TerminalFour Programm
 
 ## Latest Version
 
-## [v1.4.0_2016.10.31 - v7.4 Support](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.4.0_2016.10.31)
-T4Utils2 now officially supports both TerminalFour v7.4 and v8.1. Here's what's changed:
-* The Gulp build system now compiles 2 versions of the library (for TerminalFour v7.4 and v8.1)
-    * The main `gulpfile.js` now uses a build module to simplify and bootstrap library compilation code
-* The `ordinalIndicators` module now uses replaceable strings for any v7.1/v8.1 API discrepancies
-    * These replaceable strings are changed to the correct API calls during the build process
-* The `elementInfo` module has had undefined variable issues fixed
-* The `media` module's `getImageVariantsIds` method is now wrapped in a `T4Utils.contextIsContent` conditional
+### [v1.5.0_2016.12.09 - generateT4Tag()](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.0_2016.12.09)
+The `brokerUtils` module has been extended to include `generateT4Tag()`!
+* Create/process T4 tags by passing in a configuration object
+* Defaults are established to simplify configuration object creation
+    * type      - "content"
+    * name      - ""
+    * output    - "normal"
+    * modifiers - []
+    * id        - 0
+    * formatter - ""
 
 Check out the [changelog](changelog.md) for previous release information.
 
