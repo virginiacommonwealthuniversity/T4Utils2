@@ -8,13 +8,24 @@ A Javascript library of utility classes and extensions for TerminalFour Programm
 ### [v1.5.0_2016.12.09 - generateT4Tag()](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.0_2016.12.09)
 The `brokerUtils` module has been extended to include `generateT4Tag()`!
 * Create/process T4 tags by passing in a configuration object
-* Defaults are established to simplify configuration object creation
-    * type      - "content"
-    * name      - ""
-    * output    - "normal"
-    * modifiers - []
-    * id        - 0
-    * formatter - ""
+    * *type* (content, media, navigation, title)
+        * type - string
+        * default - "content"
+    * *name*
+        * type - string
+        * default - ""
+    * *output*
+        * type - string
+        * default - "normal"
+    * *modifiers*
+        * type - array
+        * default - []
+    * *id*
+        * type - number
+        * default - 0
+    * *formatter*
+        * type - string
+        * default - ""
 
 Check out the [changelog](changelog.md) for previous release information.
 
@@ -36,7 +47,7 @@ The T4Utils 2 build environment comes with a JSDoc3 Gulp task. To build out the 
 ## Contributing
 Please read through the [contribution guidelines](contribute.md) before opening issues or contributing code.
 
-## Maintainers
+## Contributors
 **Joel Eisner**
 * [Twitter (@joeleisner)](https://twitter.com/joeleisner)
 * [GitHub (@joeleisner)](https://github.com/joeleisner)
