@@ -40,3 +40,7 @@ Please read through the [contribution guidelines](contribute.md) before opening 
 **Joel Eisner**
 * [Twitter (@joeleisner)](https://twitter.com/joeleisner)
 * [GitHub (@joeleisner)](https://github.com/joeleisner)
+
+**Sam Yerkes**
+* [Twitter (@samyerkes)](https://twitter.com/samyerkes)
+* [GitHub (@samyerkes)](https://github.com/samyerkes)
