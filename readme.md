@@ -5,27 +5,11 @@ A Javascript library of utility classes and extensions for TerminalFour Programm
 
 ## Latest Version
 
-### [v1.5.0_2016.12.09 - generateT4Tag()](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.0_2016.12.09)
-The `brokerUtils` module has been extended to include `generateT4Tag()`!
-* Create/process T4 tags by passing in a configuration object
-    * *type* (content, media, navigation, title)
-        * type - string
-        * default - "content"
-    * *name*
-        * type - string
-        * default - ""
-    * *output*
-        * type - string
-        * default - "normal"
-    * *modifiers*
-        * type - array
-        * default - []
-    * *id*
-        * type - number
-        * default - 0
-    * *formatter*
-        * type - string
-        * default - ""
+### [v1.5.1_2016.12.19 - generateT4Tag() v7 Bug Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.1_2016.12.19)
+This is a v7 bug fix for `brokerUtils`'s module `generateT4Tag()`. Here's the scoop:
+* T4 was processing the tag templates before being loaded into a content type or page layout.
+    * No matter how this module was used, an empty string was always returned
+* The first `<` of the tag template has been replaced with the unicode equivalent `\u003C`
 
 Check out the [changelog](changelog.md) for previous release information.
 
