@@ -17,7 +17,7 @@ Check out the [changelog](changelog.md) for previous release information.
 * [Quick start](#quick-start)
 * [Documentation](#documentation)
 * [Contributing](#contributing)
-* [Maintainers](#maintainers)
+* [Contributors](#contributors)
 
 ## Quick start
 There's a couple different ways you can get your hands on the T4Utils 2 library:
