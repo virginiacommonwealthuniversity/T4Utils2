@@ -1,10 +1,10 @@
-var datestamp = require('./datestamp.js'),
-    header = require('./header.js'),
-    include = require('gulp-include'),
-    pkg = require('../package.json'),
-    rename = require('gulp-rename'),
-    replace = require('gulp-replace'),
-    uglify = require('gulp-uglify');
+let datestamp = require('./datestamp.js'),
+    header =    require('./header.js'),
+    include =   require('gulp-include'),
+    pkg =       require('../package.json'),
+    rename =    require('gulp-rename'),
+    replace =   require('gulp-replace'),
+    uglify =    require('gulp-uglify');
 
 var api = {
     content_type_id: {

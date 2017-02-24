@@ -24,7 +24,7 @@ T4Utils.brokerUtils.processT4Tag = function (t4Tag) {
 /**
  * Creates and processes a T4 tag from a configuration object and returns its computed value
  * @function brokerUtils.generateT4Tag
- * @param {Object} userSettings - The configuration object for creating the T4 tag
+ * @param {Object} userConfig - The configuration object for creating the T4 tag
  * @returns {string} the string of the computed value
  * T4Utils.brokerUtils.generateT4Tag(object);
  */

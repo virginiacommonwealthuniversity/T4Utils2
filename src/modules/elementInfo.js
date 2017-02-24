@@ -31,7 +31,7 @@ T4Utils.elementInfo.getElements = function () {
 T4Utils.elementInfo.getElementValue = function (element) {
     if (T4Utils.contextIsContent) {
         var el = content.get(element);
-        if (typeof el.publish === "function") {
+        if (typeof el.publish === 'function') {
             return el.publish();
         }
     }
@@ -49,7 +49,7 @@ T4Utils.elementInfo.getElementValue = function (element) {
 T4Utils.elementInfo.getElementName = function (element) {
     if (T4Utils.contextIsContent) {
         var el = content.get(element);
-        if (typeof el.getName === "function") {
+        if (typeof el.getName === 'function') {
             return el.getName();
         }
     }
@@ -67,7 +67,7 @@ T4Utils.elementInfo.getElementName = function (element) {
 T4Utils.elementInfo.getElementID = function (element) {
     if (T4Utils.contextIsContent) {
         var el = content.get(element);
-        if (typeof el.getID === "function") {
+        if (typeof el.getID === 'function') {
             return el.getID();
         }
     }
