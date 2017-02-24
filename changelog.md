@@ -1,7 +1,7 @@
 # Changelog
 T4Utils 2 utilizes [GitHub's releases feature](https://github.com/blog/1547-release-your-software) for its changelogs, but this document serves as static duplicate of that content.
 
-### [v1.5.1_2016.12.19 - generateT4Tag() v7 Bug Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.1_2016.12.19)
+## [v1.5.1_2016.12.19 - generateT4Tag() v7 Bug Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.1_2016.12.19)
 This is a v7 bug fix for `brokerUtils`'s module `generateT4Tag()`. Here's the scoop:
 * T4 was processing the tag templates before being loaded into a content type or page layout.
     * No matter how this module was used, an empty string was always returned
