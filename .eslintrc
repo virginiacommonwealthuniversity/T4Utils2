@@ -8,6 +8,7 @@
         "com":              true,
         "content":          true,
         "ContentHierarchy": true,
+        "ContentManager":   true,
         "currentSection":   true,
         "dbStatement":      true,
         "importClass":      true,
@@ -22,6 +23,9 @@
         "publishCache":     true,
         "section":          true,
         "T4Utils":          true
+    },
+    "parserOptions": {
+        "ecmaVersion": 6
     },
     "rules": {
         "indent":          ["warn", 4],
