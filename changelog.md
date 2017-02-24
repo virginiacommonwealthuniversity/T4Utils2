@@ -1,6 +1,12 @@
 # Changelog
 T4Utils 2 utilizes [GitHub's releases feature](https://github.com/blog/1547-release-your-software) for its changelogs, but this document serves as static duplicate of that content.
 
+## [v1.6.0_2017.02.24 - publishCache Module](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.6.0_2017.02.24)
+This update brings a much needed `publishCache` module to T4Utils. Here's what you can do with it:
+* `publishCache.channel` -   Returns a data object containing information about the current channel
+* `publishCache.microsite` - Returns, if at all possible, a data object containing information about the current microsite
+Check the source file to see the types of information you can pull from these objects!
+
 ## [v1.5.1_2016.12.19 - generateT4Tag() v7 Bug Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.1_2016.12.19)
 This is a v7 bug fix for `brokerUtils`'s module `generateT4Tag()`. Here's the scoop:
 * T4 was processing the tag templates before being loaded into a content type or page layout.
