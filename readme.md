@@ -9,6 +9,7 @@ A Javascript library of utility classes and extensions for TerminalFour Programm
 This update brings a much needed `publishCache` module to T4Utils. Here's what you can do with it:
 * `publishCache.channel` -   Returns a data object containing information about the current channel
 * `publishCache.microsite` - Returns, if at all possible, a data object containing information about the current microsite
+
 Check the source file to see the types of information you can pull from these objects!
 
 Check out the [changelog](changelog.md) for previous release information.

@@ -5,6 +5,7 @@ T4Utils 2 utilizes [GitHub's releases feature](https://github.com/blog/1547-rele
 This update brings a much needed `publishCache` module to T4Utils. Here's what you can do with it:
 * `publishCache.channel` -   Returns a data object containing information about the current channel
 * `publishCache.microsite` - Returns, if at all possible, a data object containing information about the current microsite
+
 Check the source file to see the types of information you can pull from these objects!
 
 ## [v1.5.1_2016.12.19 - generateT4Tag() v7 Bug Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.5.1_2016.12.19)
