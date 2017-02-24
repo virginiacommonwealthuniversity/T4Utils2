@@ -12,6 +12,7 @@ T4Utils.getSectionInfo = T4Utils.getSectionInfo || {};
 /**
  * Sets a link to this section (no return; sets local 'publishLink' variable)
  * @param {section} section - The global section object
+ * @returns {null} sets the getSectionInfo's publish link
  * @example
  * T4Utils.getSectionInfo.setPublishLink(section);
  */
@@ -97,23 +98,11 @@ T4Utils.getSectionInfo.getChildren = function (section, isHiddenInNAV) {
 };
 
 /**
- * Gets the path to root from currentSection
- * @function getSectionInfo.getRootPath
- * @param {section} section - The global section object
- * @returnss {Array} an array of sections until root (includes the current section)
- * @example
- * T4Utils.getSectionInfo.getRootPath(section);
- */
-T4Utils.getSectionInfo.getRootPath = function (section) {
-   return this.getPathUntilLevel(0, section);
-};
-
-/**
  * Gets an array of paths until the specified level
  * @function getSectionInfo.getPathUntilLevel
- * @param {int} finalLevel - How far down you want to traverse
+ * @param {int} level - How far down you want to traverse
  * @param {section} section - The global section object
- * @param {Array} path - Used for recursively finding the path to finalLevel
+ * @param {Array} path - Used for recursively finding the path to level
  * @returns {Array} an array of paths from the current section until we get to a certain level
  * @example
  * T4Utils.getSectionInfo.getPathUntilLevel(0, section); // Go until root
@@ -129,6 +118,18 @@ T4Utils.getSectionInfo.getPathUntilLevel = function(level, section, path) {
     } else {
         return path;
     }
+};
+
+/**
+ * Gets the path to root from currentSection
+ * @function getSectionInfo.getRootPath
+ * @param {section} section - The global section object
+ * @returns {Array} an array of sections until root (includes the current section)
+ * @example
+ * T4Utils.getSectionInfo.getRootPath(section);
+ */
+T4Utils.getSectionInfo.getRootPath = function (section) {
+    return this.getPathUntilLevel(0, section);
 };
 
 /**
