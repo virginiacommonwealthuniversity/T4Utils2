@@ -61,11 +61,12 @@ T4Utils.publishCache.channel = (function() {
  */
 T4Utils.publishCache.microsite = (function() {
     // Select the microsite based on the current section and its root ID and section
-    var microsite =   publishCache.getMicroSiteFromChild(section),
+    var channel =     publishCache.getChannel(),
+        microsite =   publishCache.getMicroSiteFromChild(section),
         isMicrosite = Boolean(microsite);
     if (isMicrosite) {
         var rootID =      Number(microsite.getRootSectionID()),
-            rootSection = TreeTraversalUtils.findSection(microsite, section, rootID, language);
+            rootSection = TreeTraversalUtils.findSection(channel, section, rootID, language);
         // Return an object that contains...
         return {
             baseHref:      String(microsite.getBaseHref()),    // (String) Base HREF for the microsite
