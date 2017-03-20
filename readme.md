@@ -5,12 +5,12 @@ A Javascript library of utility classes and extensions for TerminalFour Programm
 
 ## Latest Version
 
-### [v1.6.0_2017.02.24 - publishCache Module](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.6.0_2017.02.24)
-This update brings a much needed `publishCache` module to T4Utils. Here's what you can do with it:
-* `publishCache.channel` -   Returns a data object containing information about the current channel
-* `publishCache.microsite` - Returns, if at all possible, a data object containing information about the current microsite
-
-Check the source file to see the types of information you can pull from these objects!
+### [v1.6.1_2017.03.20 - publishCache Microsite Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.6.1_2017.03.20)
+This update fixes an issue with `publishCache.microsite`; This module variable is now working as intended. Here's some other updates:
+* T4Utils2 is dropping support for v7.4
+    * The v7.4 release of 1.6.0 has been pulled for API discrepancies and errors
+    * Maintenance of one utility file with drastically different API calls is no longer feasible
+* Build system files have been further simplified and upgraded to ES2015 (ES6)
 
 Check out the [changelog](changelog.md) for previous release information.
 
