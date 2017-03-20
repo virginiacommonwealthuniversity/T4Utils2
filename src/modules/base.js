@@ -16,15 +16,6 @@ var T4Utils = (function (utils) {
     utils.version = '{{version}}_{{datestamp}}';
 
     /**
-     * The version of TerminalFour this library is intended for
-     * @member t4
-     * @returns {string} the version of TerminalFour this library is intened for
-     * @example
-     * T4Utils.t4;
-     */
-    utils.t4 = '{{t4_version}}';
-
-    /**
      * Writes the specified message type to the browser console
      * @member console
      * @param {string} consoleMethod - You can specify which console method you want to use. 'log, warn, error' are valid

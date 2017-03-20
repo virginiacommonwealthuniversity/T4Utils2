@@ -55,15 +55,15 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
         for (var k = 0; k < cL.length; k++) {
             var cP = cL[k],
                 ctID = cP.getTemplateID(),
-                uID = cP.getID();
+                uID =  cP.getID();
             for (var l = 0; l < listContentTypeIDs.length; l++) {
                 var contentTypeID = listContentTypeIDs[l];
                 if (ctID === contentTypeID.key) contentTypeID.pieces.push(uID);
             }
         }
         // Get the current content's content-type and unique ID's
-        var this_ctID = '{{api:content_type_id}}',
-            this_uID = content.getID();
+        var this_ctID = content.getContentTypeID(),
+            this_uID =  content.getID();
         // For each key/pieces object...
         for (var m = 0; m < listContentTypeIDs.length; m++) {
             // ... create a reference, ...
@@ -71,10 +71,10 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
             // ... if the referenced object's key is equal to the current content's content-type ID...
             if (typeID.key === this_ctID) {
                 // Define (of this content-type, in the scope of the entire page)...
-                var pieces = typeID.pieces,      /* All content */
-                    pFirst = pieces[0],          /* The first piece of content */
-                    pLength = pieces.length,     /* The amount of pieces of content */
-                    pLast = pieces[pLength - 1]; /* The last piece of content */
+                var pieces =  typeID.pieces,       /* All content */
+                    pFirst =  pieces[0],           /* The first piece of content */
+                    pLength = pieces.length,       /* The amount of pieces of content */
+                    pLast =   pieces[pLength - 1]; /* The last piece of content */
                 // ... then assign values for pageCount, pageFirst, pageLast, and pageIndex based on the previously defined variables
                 pageCount = pLength;
                 pageFirst = pFirst === this_uID ? true : false;
@@ -94,7 +94,7 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
             count: pageCount, /* (Integer) The amount of content of its kind on the page */
             first: pageFirst, /* (Boolean) First of its kind on the page? */
             index: pageIndex, /* (Integer) Position index of its kind on the page */
-            last: pageLast    /* (Boolean) Last of its kind on the page? */
+            last:  pageLast   /* (Boolean) Last of its kind on the page? */
         };
     } else {
         // ... otherwise, return an object that contains null key/value pairs
@@ -102,7 +102,7 @@ T4Utils.ordinalIndicators.pageInfo = (function() {
             count: null,
             first: null,
             index: null,
-            last: null
+            last:  null
         };
     }
 })();
@@ -153,28 +153,28 @@ T4Utils.ordinalIndicators.pageLast = T4Utils.ordinalIndicators.pageInfo.last;
 T4Utils.ordinalIndicators.groupInfo = (function() {
     // If content is defined...
     if (T4Utils.contextIsContent) {
-        var ctid = '{{api:content_type_id}}',
-            sid = section.getID(),
-            oCH = new ContentHierarchy(),
-            oCM = '{{api:ocm}}',
+        var ctid = content.getContentTypeID(),
+            sid =  section.getID(),
+            oCH =  new ContentHierarchy(),
+            oCM =  com.terminalfour.spring.ApplicationContextProvider.getBean(com.terminalfour.content.IContentManager),
             contentInSection = oCH.getContent(dbStatement, sid, 'en'),
             groupFirst, groupLast;
         for (var i = 0; i < contentInSection.length; i++) {
-            if (content.getID() === '{{api:ocm_get_id}}') {
-                groupFirst = i === 0 ? true : ctid !== '{{api:ocm_prev_content_type_id}}' ? true : false;
-                groupLast = i === contentInSection.length - 1 ? true : ctid !== '{{api:ocm_next_content_type_id}}' ? true : false;
+            if (content.getID() === oCM.get(contentInSection[i], 'en').getID()) {
+                groupFirst = i === 0 ? true : ctid !== oCM.get(contentInSection[i - 1], 'en').getContentTypeID() ? true : false;
+                groupLast = i === contentInSection.length - 1 ? true : ctid !== oCM.get(contentInSection[i + 1], 'en').getContentTypeID() ? true : false;
             }
         }
         // Return an object that contains...
         return {
             first: groupFirst, /* (Boolean) First of its kind in a group? */
-            last: groupLast    /* (Boolean) Last of its kind in a group? */
+            last:  groupLast   /* (Boolean) Last of its kind in a group? */
         };
     } else {
         // ... otherwise, return an object that contains null key/value pairs
         return {
             first: null,
-            last: null
+            last:  null
         };
     }
 })();

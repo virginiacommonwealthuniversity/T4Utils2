@@ -1,21 +1,30 @@
-// Required Modules
 let datestamp = require('./datestamp.js'),
     header =    require('gulp-header'),
     pkg =       require('../package.json');
 
-module.exports = function(version) {
-    let banner =
+module.exports = format => {
+    let banner,
+        info = {
+            date: datestamp()
+        };
+    switch (format) {
+    case 'exp':
+        banner =
 `/**
  * T4Utils 2
  * @author <%= pkg.author %>
- * @version <%= pkg.version %>_<%= info.date %> (<%= info.version %>)
+ * @version <%= pkg.version %>_<%= info.date %>
  * @license <%= pkg.license %>
  */
 
-`,
-        info = {
-            version: version,
-            date: datestamp()
-        };
+`;
+        break;
+    case 'min':
+        banner =
+`/* T4Utils2 <%= pkg.version %>_<%= info.date %> | <%= pkg.license %> | <%= pkg.author %> */
+
+`;
+        break;
+    }
     return header(banner, {pkg, info});
 };
