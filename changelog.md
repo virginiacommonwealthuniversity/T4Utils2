@@ -1,6 +1,16 @@
 # Changelog
 T4Utils 2 utilizes [GitHub's releases feature](https://github.com/blog/1547-release-your-software) for its changelogs, but this document serves as static duplicate of that content.
 
+## [v1.7.0_2017.06.01 - Ordinal Indicators Enhancement](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.7.0_2017.06.01)
+This update enhances the structure, performance, and extensiveness of the `ordinalIndicators` module; Here's how:
+* Both the `pageInfo` and `groupInfo` methods have been merged into one self-executing function: `info`
+    * Now you can grab all page/group information via `ordinalIndicators.info`
+* More information about groups is available
+    * `ordinalIndicators.groupAmount` - The total amount of groups on the page
+    * `ordinalIndicators.groupCount` - The total amount of content within the current group
+    * `ordinalIndicators.groupID` - The ID of the current group (zero-based)
+    * `ordinalIndicators.groupIndex` - The index of the current piece of content within the group (zero-based)
+
 ## [v1.6.1_2017.03.20 - publishCache Microsite Fix](https://github.com/virginiacommonwealthuniversity/T4Utils2/releases/tag/v1.6.1_2017.03.20)
 This update fixes an issue with `publishCache.microsite`; This module variable is now working as intended. Here's some other updates:
 * T4Utils2 is dropping support for v7.4

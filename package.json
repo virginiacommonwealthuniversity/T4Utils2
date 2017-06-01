@@ -1,6 +1,6 @@
 {
   "name": "t4-utils-2",
-  "version": "1.6.1",
+  "version": "1.7.0",
   "description": "A Javascript Library of Utility Classes and Extensions for TerminalFour Programmable Layouts",
   "main": "dist/8.4/T4Utils.min.js",
   "author": "Joel Eisner <eisnerjr@vcu.edu>",
