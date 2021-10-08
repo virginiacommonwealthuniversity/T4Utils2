@@ -1,12 +1,16 @@
 /**
  * Base module
  * @module modules/base
+ * @extends T4Utils
  * @contributors Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
  * @version 2.0.0
  */
 
 // Grab the package information
 import pkg from '../package.json';
+
+// Java language package
+importPackage(java.lang);
 
 // Creates a toJavaString prototype on the global String object
 String.prototype.toJavaString = function () {
@@ -25,8 +29,8 @@ export const version = pkg.version;
 /**
  * Writes the specified message type to the browser console
  * @member console
- * @param {String} method - You can specify which console method you want to use. 'log, warn, error' are valid
- * @param {String} message - The text you want to write to the screen.
+ * @param {string} method - You can specify which console method you want to use. 'log, warn, error' are valid
+ * @param {string} message - The text you want to write to the screen.
  * @returns {null} document.write's a script tag with a console method
  * @example
  * T4Utils.console(string, string);
@@ -42,7 +46,7 @@ export function console(method, message) {
 /**
  * Writes a message to the browser console
  * @function console.log
- * @param {String} message - The text you want to write to the screen.
+ * @param {string} message - The text you want to write to the screen.
  * @returns {null} document.write's a script tag with a console.log method
  * @example
  * T4Utils.console.log(string);
@@ -54,7 +58,7 @@ console.log = function(message) {
 /**
  * Writes a warning to the browser console
  * @function console.warn
- * @param {String} message - The text you want to write to the screen.
+ * @param {string} message - The text you want to write to the screen.
  * @returns {null} document.write's a script tag with a console.warn method
  * @example
  * T4Utils.console.warn(string);
@@ -66,7 +70,7 @@ console.warn = function(message) {
 /**
  * Writes an error to the browser console
  * @function console.error
- * @param {String} message - The text you want to write to the screen.
+ * @param {string} message - The text you want to write to the screen.
  * @returns {null} document.write's a script tag with a console.error method
  * @example
  * T4Utils.console.error(string);
@@ -78,7 +82,7 @@ console.error = function(message) {
 /**
  * Sets the context of where the library is being executed from (i.e. null if from within a page-layout, content if from within a content-type)
  * @member context
- * @return {?Object} context - Either null if the context is from within a page-layout, and the content variable if from withing a content-type
+ * @return {?object} context - Either null if the context is from within a page-layout, and the content variable if from withing a content-type
  * T4Utils.context
  */
 export const context = content || null;
