@@ -1,75 +1,105 @@
 /**
- * elementInfo - The Element Info Module
+ * Element info module
+ * @module modules/elementInfo
  * @namespace elementInfo
  * @extends T4Utils
- * @author Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
- * @version 1.1.0
+ * @contributors Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
+ * @version 2.0.0
  * @example
  * T4Utils.elementInfo
  */
-T4Utils.elementInfo = T4Utils.elementInfo || {};
+
+// Grab whether the context is the page or not
+import { contextIsPage } from './base';
 
 /**
  * Gets all elements within a piece of content
  * @function elementInfo.getElements
- * @returns {Array} an array containing the elements within the piece of content.
+ * @returns {array} An array containing the elements within the piece of content
  * @example
  * T4Utils.elementInfo.getElements();
  */
-T4Utils.elementInfo.getElements = function () {
-    return T4Utils.contextIsContent ? content.getElements() : null ;
-};
+export function getElements() {
+    // Return null when within the context of a page
+    if (contextIsPage) return null;
+
+    // Otherwise, return the content's elements
+    return content.getElements();
+}
+
+/**
+ * Gets an element and returns its value
+ * @function elementInfo.getElement
+ * @param {string} name The name of the element
+ * @param {?string} method The method to run on the element
+ * @returns {string|null} The value of the element (or null)
+ * @example
+ * T4Utils.elementInfo.getElement('name', 'publish');
+ */
+export function getElement(name, method) {
+    // Return null when within the context of a page
+    if (contextIsPage) return null;
+
+    // Get the element of the given name
+    const element = content.get(name);
+
+    // If no method was provided, return the element as-is
+    if (!method) return element;
+
+    // If the method provided doesn't exist or isn't a function, return null
+    if (!element[method] && typeof element[method] !== 'function') return null;
+
+    // Finally, return the value's method output
+    return element[method]();
+}
 
 /**
  * Gets an element's publish value as a string
+ * @function elementInfo.getElement.publish
  * @function elementInfo.getElementValue
- * @param {string} element - The string value of the name of the element
- * @returns {string} the value of the element (can be null if the supplied value is already null)
+ * @param {string} name The name of the element
+ * @returns {string|null} The value of the element
  * @example
- * T4Utils.elementInfo.getElementValue(string);
+ * T4Utils.elementInfo.getElementValue('name');
  */
-T4Utils.elementInfo.getElementValue = function (element) {
-    if (T4Utils.contextIsContent) {
-        var el = content.get(element);
-        if (typeof el.publish === 'function') {
-            return el.publish();
-        }
-    }
-    return null;
+getElement.publish = function(name) {
+    return this(name, 'publish');
 };
+
+export function getElementValue(name) {
+    return getElement.publish(name);
+}
 
 /**
  * Gets the name of an element
+ * @function elementInfo.getElement.getName
  * @function elementInfo.getElementName
- * @param {string} element - The string value of the name of the element
- * @returns {string} the name of the element
+ * @param {string} name The name of the element
+ * @returns {string|null} The name of the element
  * @example
- * T4Utils.elementInfo.getElementName(string);
+ * T4Utils.elementInfo.getElementName('name');
  */
-T4Utils.elementInfo.getElementName = function (element) {
-    if (T4Utils.contextIsContent) {
-        var el = content.get(element);
-        if (typeof el.getName === 'function') {
-            return el.getName();
-        }
-    }
-    return null;
+getElement.getName = function(name) {
+    return this(name, 'getName');
 };
+
+export function getElementName(name) {
+    return getElement.getName(name);
+}
 
 /**
  * Gets the ID of an element
+ * @function elementInfo.getElement.getID
  * @function elementInfo.getElementID
- * @param {string} element - The string value of the name of the element
- * @returns {string} the ID of the element
+ * @param {string} name The name of the element
+ * @returns {string|null} The ID of the element
  * @example
- * T4Utils.elementInfo.getElementID(string);
+ * T4Utils.elementInfo.getElementID('name');
  */
-T4Utils.elementInfo.getElementID = function (element) {
-    if (T4Utils.contextIsContent) {
-        var el = content.get(element);
-        if (typeof el.getID === 'function') {
-            return el.getID();
-        }
-    }
-    return null;
+getElement.getID = function(name) {
+    return this(name, 'getID');
 };
+
+export function getElementID(name) {
+    return getElement.getID(name);
+}

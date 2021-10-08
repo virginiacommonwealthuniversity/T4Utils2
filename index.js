@@ -7,8 +7,10 @@
 
 import * as base from './modules/base';
 import * as brokerUtils from './modules/brokerUtils';
+import * as elementInfo from './modules/elementInfo';
 
 export default {
     ...base,
-    brokerUtils
+    brokerUtils,
+    elementInfo
 };
