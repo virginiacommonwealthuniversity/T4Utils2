@@ -1,8 +1,8 @@
 {
   "name": "t4-utils-2",
   "version": "1.7.0",
-  "description": "A Javascript Library of Utility Classes and Extensions for TerminalFour Programmable Layouts",
-  "main": "dist/8.4/T4Utils.min.js",
+  "description": "A Javascript library of utility classes and extensions for TerminalFour programmable layouts",
+  "main": "dist/T4Util.js",
   "author": "Joel Eisner <eisnerjr@vcu.edu>",
   "repository": {
     "type": "git",
@@ -10,7 +10,15 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "babel-loader": "^8.2.2",
+    "eslint": "^7.32.0",
+    "terser-webpack-plugin": "^5.2.4",
     "webpack": "^5.58.1",
     "webpack-cli": "^4.9.0"
+  },
+  "scripts": {
+    "build": "NODE_ENV=production webpack",
+    "develop": "NODE_ENV=development webpack --watch",
+    "dev": "npm run develop"
   }
 }
