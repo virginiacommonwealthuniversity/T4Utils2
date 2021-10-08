@@ -26,6 +26,10 @@ module.exports = {
         'T4Utils': true,
         'TreeTraversalUtils': true
     },
+    ignorePatterns: [
+        'dist/**/*.js',
+        'node_modules/**/*.js'
+    ],
     parserOptions: {
         ecmaVersion: 12,
         sourceType: 'module'

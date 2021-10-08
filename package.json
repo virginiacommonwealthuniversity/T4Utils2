@@ -10,6 +10,8 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
     "babel-loader": "^8.2.2",
     "eslint": "^7.32.0",
     "terser-webpack-plugin": "^5.2.4",
