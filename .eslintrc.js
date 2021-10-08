@@ -6,6 +6,7 @@ module.exports = {
     },
     extends: 'eslint:recommended',
     globals: {
+        'BrokerUtils': true,
         'com': true,
         'content': true,
         'ContentHierarchy': true,

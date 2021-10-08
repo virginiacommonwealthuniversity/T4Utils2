@@ -6,7 +6,9 @@
  */
 
 import * as base from './modules/base';
+import * as brokerUtils from './modules/brokerUtils';
 
 export default {
-    ...base
+    ...base,
+    brokerUtils
 };
