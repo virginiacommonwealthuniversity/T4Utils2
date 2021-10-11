@@ -1,228 +1,376 @@
 /**
- * ordinalIndicators - The Ordinal Indicators Module
+ * The ordinal indicators Module
  * @namespace ordinalIndicators
  * @extends T4Utils
  * @author Joel Eisner <eisnerjr@vcu.edu>
- * @version 2.0.0
+ * @version 2.1.0
  * @example
  * T4Utils.ordinalIndicators
  */
-T4Utils.ordinalIndicators = T4Utils.ordinalIndicators || {};
+
+// Grab whether the context is the page or not
+import { contextIsPage } from './base';
+
+// Application context provider class
+importClass(com.terminalfour.spring.ApplicationContextProvider);
+
+// Content manager class
+importClass(com.terminalfour.content.IContentManager);
+
+// CS helper class
+importClass(com.terminalfour.sitemanager.cache.utils.CSHelper);
+
+// Cached content class
+importClass(com.terminalfour.sitemanager.cache.CachedContent);
+
+// Site manager package
+importPackage(com.terminalfour.sitemanager);
+
+// Content package
+importPackage(com.terminalfour.content);
+
+/**
+ * Gets an array of page contents
+ * @function ordinalIndicators.getCcontents
+ * @param {?number} sectionID The section to grab page contents from
+ * @returns {array} An array of page contents
+ * @example
+ * T4Utils.ordinalIndicators.getContents();
+ */
+export function getContents(sectionID = section.getID()) {
+    // Create an instance of a content hierarchy...
+    const contentHierarchy = new ContentHierarchy();
+    // ... and content manager
+    const contentManager = ApplicationContextProvider.getBean(IContentManager);
+
+    // Return the page contents as objects
+    return Array.from(
+        contentHierarchy.getContent(
+            dbStatement,
+            sectionID,
+            'en'
+        )
+    ).map(info => contentManager.get(info, 'en'));
+}
+
+/**
+ * Gets the current content type's ID
+ * @function ordinalIndicators.getCurrentContentTypeID
+ * @returns {number} The current content type's ID
+ * @example
+ * T4Utils.ordinalIndicators.getCurrentContentTypeID();
+ */
+export function getCurrentContentTypeID() {
+    // Return null when within the context of a page
+    if (contextIsPage) return null;
+
+    // Otherwise, return the current content type's ID
+    return content.getContentTypeID();
+}
+
+/**
+ * Get's the current content's ID
+ * @function ordinalIndicators.getCurrentContentID
+ * @returns {number} The current content's ID
+ * @example
+ * T4Utils.ordinalIndicators.getCurrentContentID();
+ */
+export function getCurrentContentID() {
+    // Return null when within the context of a page
+    if (contextIsPage) return null;
+
+    // Otherwise, return the current content's ID
+    return content.getID();
+}
+
+/**
+ * Gets an array of siblings (contents of the same kind as the current content)
+ * @function ordinalIndicators.getSiblings
+ * @param {?object} information An object of content information
+ * @param {?array} information.contents An array of contents (defaults to page contents)
+ * @param {?number} information.contentTypeID The content type ID to match siblings against
+ * @returns {array} An array of sibling content types
+ * @example
+ * T4Utils.ordinalIndicators.getSiblings();
+ */
+export function getSiblings({
+    contents = getContents(),
+    contentTypeID = getCurrentContentTypeID()
+} = {}) {
+    // Return the contents filtered for ones matching the content type ID
+    return contents.filter(
+        object => object.getContentTypeID() === contentTypeID
+    );
+}
+
+/**
+ * Gets an array of content page information
+ * @function ordinalIndicators.getPageInfo
+ * @param {?array} contents An array of contents (defaults to sibling contents)
+ * @returns {array} An array of content page information
+ * @example
+ * T4Utils.ordinalIndicators.getPageInfo();
+ */
+export function getPageInfo(contents = getSiblings()) {
+    // If there are no contents, return an empty array
+    if (!contents.length) return [];
+
+    // Otherwise, return the contents as page information
+    return contents.map((object, index) => {
+        // Grab the content object's ID,...
+        const contentID = object.getID();
+        // ... the total contents amount,...
+        const count = contents.length;
+        // ... and whether its first...
+        const first = !index;
+        // ... or last
+        const last = index === contents.length - 1;
+
+        // Finally, return all information as an object
+        return {
+            contentID,
+            count,
+            first,
+            index,
+            last
+        };
+    });
+}
+
+/**
+ * Gets an array of content group information
+ * @function ordinalIndicators.getGroupInfo
+ * @param {?object} information An object of content information
+ * @param {?array} information.contents An array of contents (defaults to page contents)
+ * @param {?number} information.contentTypeID The content type ID to match siblings against
+ * @returns {array} An array of content group information
+ * @example
+ * T4Utils.ordinalIndicators.getGroupInfo()
+ */
+export function getGroupInfo({
+    contents = getContents(),
+    contentTypeID = getCurrentContentTypeID()
+} = {}) {
+    // Initialize the group ID...
+    let id = 0;
+    // ... and offset
+    let offset = 0;
+
+    // Create an array of siblings...
+    const siblings = contents
+        .map((object, index) => {
+            // If the piece of content isn't of the same kind,...
+            if (object.getContentTypeID() !== contentTypeID) {
+                // ... reset the group offset...
+                offset = 0;
+                // ... and return null
+                return null;
+            }
+
+            // Grab the content object's ID
+            const contentID = object.getID();
+
+            // Grab the previous piece of content...
+            const previous = index ? contents[index - 1] : null;
+            // ... and whether it's a sibling (of the same kind)
+            const previousIsSibling = previous ? previous.getContentTypeID() === contentTypeID : false;
+
+            // Grab the next piece of content...
+            const next = index < contents.length - 1 ? contents[index + 1] : null;
+            // ... and whether it's a sibling (of the same kind)
+            const nextIsSibling = next ? next.getContentTypeID() === contentTypeID : false;
+
+            // Calculate whether this piece of content is the first...
+            const first = previous && previousIsSibling ? false : true;
+            // ... or last of a group
+            const last = next && nextIsSibling ? false : true;
+
+            // Set the group data...
+            let data = {
+                contentID,
+                id,
+                first,
+                index: offset,
+                last
+            };
+            // ... and increment the group offset
+            offset++;
+
+            // If the next piece of content isn't a sibling, increment the group ID
+            if (!nextIsSibling) id++;
+
+            // Finally, return the data
+            return data;
+        })
+        .filter(Boolean);
+    // ... and a map of all groups
+    const map = siblings.reduce((array, { id }) => {
+        array[id] ? array[id] += 1 : array[id] = 1;
+        return array;
+    }, []);
+
+    // Finally, return the siblings with amount/count data added
+    return siblings.map(data => {
+        // Grab the amount of groups...
+        const amount = map.length;
+        // ... and how many are within the current group
+        const count = map[data.id];
+
+        // Return the data with amount/count added
+        return {
+            ...data,
+            amount,
+            count
+        };
+    });
+}
+
+/**
+ * Gets page/group info for a specific piece of content
+ * @function ordinalIndicators.getInfo
+ * @param {?object} information An object of content information
+ * @param {?number} information.sectionID The section ID to get content information from
+ * @param {?number} information.contentTypeID The content type ID to match siblings against
+ * @param {?number} information.contentID The content ID to filter results against
+ * @returns {object} An object of page/group information of the given piece of content
+ * @example
+ * T4Utils.ordinalIndicators.getInfo()
+ */
+export function getInfo({
+    sectionID = section.getID(),
+    contentTypeID = getCurrentContentTypeID(),
+    contentID: id = getCurrentContentID()
+} = {}) {
+    // Grab an array of page contents,...
+    const contents = getContents(sectionID);
+    // ... sibling content types...
+    const siblings = getSiblings({ contents, contentTypeID });
+    // ... and their page...
+    const page = getPageInfo(siblings).find(({ contentID }) => contentID === id) || {};
+    // ... and group info
+    const group = getGroupInfo({ contents, contentTypeID }).find(({ contentID }) => contentID === id) || {};
+
+    // Finally, return all data as an object
+    return {
+        id,
+        page,
+        group
+    };
+}
 
 /**
  * Find information about the content within context to the page and group
- * @function ordinalIndicators.info
+ * @constant ordinalIndicators.info
  * @returns {Object} an object containing information such as index, count, first, last, etc. within context to the page and group
  * @example
  * T4Utils.ordinalIndicators.info;
  */
-T4Utils.ordinalIndicators.info = (function() {
-    // If content is defined...
-    if (T4Utils.contextIsContent) {
-        var contentTypeID = content.getContentTypeID(),
-            sectionID =     section.getID(),
-            contentID =     content.getID(),
-            oCH =           new ContentHierarchy(),
-            oCM =           com.terminalfour.spring.ApplicationContextProvider.getBean(com.terminalfour.content.IContentManager),
-            pageContents =  oCH.getContent(dbStatement, sectionID, 'en'),
-            sameContents =  [],
-            calcContents =  [],
-            pageCount =     0,
-            offset =        0,
-            groupID =       0,
-            i, j, output;
-        // Grab/store all content types of a kind
-        for (i = 0; i < pageContents.length; i++) {
-            var pageContent = oCM.get(pageContents[i], 'en');
-            // If the page content's content-type ID matches the current content-type ID, push its ID/page-index to the sameContents array
-            if (pageContent.getContentTypeID() === contentTypeID) sameContents.push({ id: pageContent.getID(), pageIndex: i });
-        }
-        // Set the initial state of the index offset...
-        offset = sameContents[0].pageIndex;
-        // ... and store the amount of content there is of this kind
-        pageCount += sameContents.length;
-        // Calculate/store page/group information of a kind
-        for (j = 0; j < pageCount; j++) {
-            var piece =      sameContents[j],
-                pageIndex =  piece.pageIndex,
-                pageFirst =  j === 0,
-                pageLast =   j === pageCount - 1,
-                groupFirst = false,
-                groupLast =  false;
-            // If this kind is not the first of its kind on the page...
-            if (!pageFirst) {
-                // Grab the previous kind
-                var previousPiece = sameContents[j - 1];
-                // If this kind's page index minus the previous kind's page index is greater than 1...
-                if (pageIndex - previousPiece.pageIndex > 1) {
-                    // ... adjust the offset,...
-                    offset = pageIndex;
-                    // ... this kind is the first of its group,...
-                    groupFirst = true;
-                    // ... and increment up the group ID
-                    groupID++;
-                }
-            }
-            // If this kind is not the last of its kind on the page...
-            if (!pageLast) {
-                // Grab the next kind
-                var nextPiece = sameContents[j + 1];
-                // If the next kind's page index minus this kind's page index is greater than 1, this kind is the last of its group
-                if (nextPiece.pageIndex - pageIndex > 1) groupLast = true;
-            }
-            // Push the calculated content information as an object to the calcContents array
-            calcContents.push({
-                id:        piece.id,
-                page: {
-                    count: pageCount,
-                    first: pageFirst,
-                    index: pageIndex,
-                    last:  pageLast
-                },
-                group: {
-                    first: pageFirst || groupFirst,
-                    id:    groupID,
-                    index: pageIndex - offset,
-                    last:  pageLast || groupLast
-                }
-            });
-        }
-        // Grab the current content's info and format it for return
-        output = calcContents.filter(function (piece) {
-            return piece.id === contentID;
-        })[0];
-        output.group.count = calcContents.filter(function (piece) {
-            return piece.group.id === output.group.id;
-        }).length;
-        output.group.amount = calcContents[calcContents.length - 1].group.id + 1;
-        delete output['id'];
-        // Return the output
-        return output;
-    } else {
-        // ... otherwise, return an object that contains null key/value pairs
-        return {
-            page: {
-                count: null,
-                first: null,
-                index: null,
-                last:  null
-            },
-            group: {
-                amount: null,
-                count:  null,
-                first:  null,
-                id:     null,
-                index:  null,
-                last:   null
-            }
-        };
-    }
-})();
+export const info = getInfo();
 
 /**
  * Find information about the content within context to the page
- * @function ordinalIndicators.pageInfo
+ * @constant ordinalIndicators.pageInfo
  * @returns {Object} an object containing information such as index, count, first, last, etc. within context to the page
  * @example
  * T4Utils.ordinalIndicators.pageInfo;
  */
-T4Utils.ordinalIndicators.pageInfo = T4Utils.ordinalIndicators.info.page;
+export const { page: pageInfo } = info;
 
 /**
  * Find how many pieces of content of the same kind are on the page
- * @member ordinalIndicators.pageCount
+ * @constant ordinalIndicators.pageCount
  * @returns {Number} an integer representing the amount of pieces of content of the same kind on the page
  * @example
  * T4Utils.ordinalIndicators.pageCount;
  */
-T4Utils.ordinalIndicators.pageCount = T4Utils.ordinalIndicators.pageInfo.count;
+export const { count: pageCount } = pageInfo;
 
 /**
  * Find if the position of the content within context to the page is the first of its kind
- * @member ordinalIndicators.pageFirst
+ * @constant ordinalIndicators.pageFirst
  * @returns {Boolean} a boolean value; true if first, false if not
  * @example
  * T4Utils.ordinalIndicators.pageFirst;
  */
-T4Utils.ordinalIndicators.pageFirst = T4Utils.ordinalIndicators.pageInfo.first;
+export const { first: pageFirst } = pageInfo;
 
 /**
  * Find the index of the content within context to the page
- * @member ordinalIndicators.pageIndex
+ * @constant ordinalIndicators.pageIndex
  * @returns {Number} an integer representing the content's positon on the page (starts from 0)
  * @example
  * T4Utils.ordinalIndicators.pageIndex;
  */
-T4Utils.ordinalIndicators.pageIndex = T4Utils.ordinalIndicators.pageInfo.index;
+export const { index: pageIndex } = pageInfo;
 
 /**
  * Find if the position of the content within context to the page is the last of its kind
- * @member ordinalIndicators.pageLast
+ * @constant ordinalIndicators.pageLast
  * @returns {Boolean} a boolean value; true if last, false if not
  * @example
  * T4Utils.ordinalIndicators.pageLast;
  */
-T4Utils.ordinalIndicators.pageLast = T4Utils.ordinalIndicators.pageInfo.last;
+export const { last: pageLast } = pageInfo;
 
 /**
  * Find information about the content within context to the group
- * @function ordinalIndicators.groupInfo
+ * @constant ordinalIndicators.groupInfo
  * @returns {Object} an object containing information such as index, count, first, last, etc. within context to the group
  * @example
  * T4Utils.ordinalIndicators.groupInfo;
  */
-T4Utils.ordinalIndicators.groupInfo = T4Utils.ordinalIndicators.info.group;
+export const { group: groupInfo } = info;
 
 /**
  * Find how many groups of the content's kind are on the page
- * @function ordinalIndicators.groupAmount
+ * @constant ordinalIndicators.groupAmount
  * @returns {Number} an integer representing how many groups of the content's kind are on the page
  * @example
  * T4Utils.ordinalIndicators.groupAmount;
  */
-T4Utils.ordinalIndicators.groupAmount = T4Utils.ordinalIndicators.groupInfo.amount;
+export const { amount: groupAmount } = groupInfo;
 
 /**
  * Find how many pieces of content are within the content's group
- * @function ordinalIndicators.groupCount
+ * @constant ordinalIndicators.groupCount
  * @returns {Number} an integer representing how many pieces of content are withing the content's group
  * @example
  * T4Utils.ordinalIndicators.groupCount;
  */
-T4Utils.ordinalIndicators.groupCount = T4Utils.ordinalIndicators.groupInfo.count;
+export const { count: groupCount } = groupInfo;
 
 /**
  * Find if the position of the content within context to a group of the same content-type is the first of its kind
- * @function ordinalIndicators.groupFirst
+ * @constant ordinalIndicators.groupFirst
  * @returns {Boolean} a boolean value; true if first, false if not
  * @example
  * T4Utils.ordinalIndicators.groupFirst;
  */
-T4Utils.ordinalIndicators.groupFirst = T4Utils.ordinalIndicators.groupInfo.first;
+export const { first: groupFirst } = groupInfo;
 
 /**
  * Find the id of the content's group
- * @function ordinalIndicators.groupID
+ * @constant ordinalIndicators.groupID
  * @returns {Number} an integer representing the id of the content's group
  * @example
  * T4Utils.ordinalIndicators.groupID;
  */
-T4Utils.ordinalIndicators.groupID = T4Utils.ordinalIndicators.groupInfo.id;
+export const { id: groupID } = groupInfo;
 
 /**
  * Find the index of the content within context of its group
- * @function ordinalIndicators.groupIndex
+ * @constant ordinalIndicators.groupIndex
  * @returns {Number} an integer representing the content's positon in the group (starts from 0)
  * @example
  * T4Utils.ordinalIndicators.groupIndex;
  */
-T4Utils.ordinalIndicators.groupIndex = T4Utils.ordinalIndicators.groupInfo.index;
+export const { index: groupIndex } = groupInfo;
 
 /**
  * Find if the position of the content within context to a group of the same content-type is the last of its kind
- * @function ordinalIndicators.groupLast
+ * @constant ordinalIndicators.groupLast
  * @returns {Boolean} a boolean value; true if last, false if not
  * @example
  * T4Utils.ordinalIndicators.groupLast;
  */
-T4Utils.ordinalIndicators.groupLast = T4Utils.ordinalIndicators.groupInfo.last;
+export const { last: groupLast } = groupInfo;

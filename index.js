@@ -10,11 +10,13 @@ import * as brokerUtils from './modules/brokerUtils';
 import * as elementInfo from './modules/elementInfo';
 import * as getSectionInfo from './modules/getSectionInfo';
 import * as media from './modules/media';
+import * as ordinalIndicators from './modules/ordinalIndicators';
 
 export default {
     ...base,
     brokerUtils,
     elementInfo,
     getSectionInfo,
-    media
+    media,
+    ordinalIndicators
 };
