@@ -6,6 +6,7 @@ module.exports = {
     },
     extends: 'eslint:recommended',
     globals: {
+        'ApplicationContextProvider': true,
         'BrokerUtils': true,
         'com': true,
         'content': true,
@@ -13,6 +14,7 @@ module.exports = {
         'ContentManager': true,
         'currentSection': true,
         'dbStatement': true,
+        'IContentManager': true,
         'importClass': true,
         'importPackage': true,
         'isPreview': true,
@@ -24,6 +26,7 @@ module.exports = {
         'PathBuilder': true,
         'publishCache': true,
         'section': true,
+        'SiteManagerVersion': true,
         'T4Utils': true,
         'TreeTraversalUtils': true
     },
