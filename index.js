@@ -8,9 +8,11 @@
 import * as base from './modules/base';
 import * as brokerUtils from './modules/brokerUtils';
 import * as elementInfo from './modules/elementInfo';
+import * as getSectionInfo from './modules/getSectionInfo';
 
 export default {
     ...base,
     brokerUtils,
-    elementInfo
+    elementInfo,
+    getSectionInfo
 };
