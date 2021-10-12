@@ -8,9 +8,6 @@
  * T4Utils.ordinalIndicators
  */
 
-// Grab whether the context is the page or not
-import { contextIsPage } from './base';
-
 // Application context provider class
 importClass(com.terminalfour.spring.ApplicationContextProvider);
 
@@ -30,57 +27,119 @@ importPackage(com.terminalfour.sitemanager);
 importPackage(com.terminalfour.content);
 
 /**
- * Gets an array of page contents
- * @function ordinalIndicators.getCcontents
- * @param {?number} sectionID The section to grab page contents from
- * @returns {array} An array of page contents
+ * Gets the contents IDs of a given section ID
+ * @function ordinalIndicators.getContentsIDs
+ * @param {?number} sectionID The ID of a section
+ * @returns {array} An array of contents IDs
  * @example
- * T4Utils.ordinalIndicators.getContents();
+ * T4Utils.ordinalIndicators.getContentsIDs();
  */
-export function getContents(sectionID = section.getID()) {
+export function getContentsIDs(sectionID = section.getID()) {
     // Create an instance of a content hierarchy...
     const contentHierarchy = new ContentHierarchy();
-    // ... and content manager
-    const contentManager = ApplicationContextProvider.getBean(IContentManager);
-
-    // Return the page contents as objects
+    // ... and get the contents IDs of a given section ID
     return Array.from(
         contentHierarchy.getContent(
             dbStatement,
             sectionID,
             'en'
         )
-    ).map(info => contentManager.get(info, 'en'));
+    );
 }
 
 /**
- * Gets the current content type's ID
- * @function ordinalIndicators.getCurrentContentTypeID
- * @returns {number} The current content type's ID
+ * Gets the content object of a given content ID
+ * @function ordinalIndicators.getContent
+ * @param {number} contentID The ID of a piece of content
+ * @returns {object} A content object
  * @example
- * T4Utils.ordinalIndicators.getCurrentContentTypeID();
+ * T4Utils.ordinalIndicators.getContent(1234);
  */
-export function getCurrentContentTypeID() {
-    // Return null when within the context of a page
-    if (contextIsPage) return null;
+export function getContent(contentID) {
+    // Create an instance of a content manager...
+    const contentManager = ApplicationContextProvider.getBean(IContentManager);
+    // ... and get the content of a given content ID
+    return contentManager.get(contentID, 'en');
+}
+
+/**
+ * Returns whether a piece of content is active (approved/pending) or not
+ * @function ordinalIndicators.contentIsActive
+ * @param {object} contentObject The content object
+ * @returns {boolean} Whether the content is active or not
+ * @example
+ * T4Utils.ordinalIndicators.contentIsActive(content);
+ */
+export function contentIsActive(contentObject) {
+    return contentObject.getStatus() !== 2;
+}
+
+/**
+ * Returns whether a piece of content will publish or not
+ * @function ordinalIndicators.contentWillPublish
+ * @param {object} contentObject The content object
+ * @returns {boolean} Whether the content will publish or not
+ * @example
+ * T4Utils.ordinalIndicators.contentWillPublish(content);
+ */
+export function contentWillPublish(contentObject) {
+    return Number(String(contentObject.getVersion()).split('.')[0]) >= 1;
+}
+
+/**
+ * Gets an array of page contents
+ * @function ordinalIndicators.getCcontents
+ * @param {?number} sectionID The section ID to grab page contents from
+ * @returns {array} An array of page contents
+ * @example
+ * T4Utils.ordinalIndicators.getContents();
+ */
+export function getContents(sectionID = section.getID()) {
+    // Get the page contents IDs,...
+    const contents = getContentsIDs(sectionID)
+        // ... convert them to content objects,...
+        .map(getContent)
+        // ... and filter out content objects that are deleted/inactive
+        .filter(contentIsActive);
+
+    // If in preview mode, return the page contents as-is...
+    if (isPreview) return contents;
+    // ... otherwise, filter out unpublishable contents
+    return contents.filter(contentWillPublish);
+}
+
+/**
+ * Gets a content object's content type ID
+ * @function ordinalIndicators.getContentTypeID
+ * @param {?object} contentObject The content object
+ * @returns {number} The content type ID
+ * @example
+ * T4Utils.ordinalIndicators.getContentTypeID(); // Current content
+ * T4Utils.ordinalIndicators.getContentTypeID(content); // Other content
+ */
+export function getContentTypeID(contentObject = content) {
+    // Return null when the content object is empty
+    if (!contentObject) return null;
 
     // Otherwise, return the current content type's ID
-    return content.getContentTypeID();
+    return contentObject.getContentTypeID();
 }
 
 /**
- * Get's the current content's ID
- * @function ordinalIndicators.getCurrentContentID
+ * Gets a content object's ID
+ * @function ordinalIndicators.getContentID
+ * @param {?object} contentObject The content object
  * @returns {number} The current content's ID
  * @example
- * T4Utils.ordinalIndicators.getCurrentContentID();
+ * T4Utils.ordinalIndicators.getContentID(); // Current content
+ * T4Utils.ordinalIndicators.getContentID(content); // Other content
  */
-export function getCurrentContentID() {
-    // Return null when within the context of a page
-    if (contextIsPage) return null;
+export function getContentID(contentObject = content) {
+    // Return null when the content object is empty
+    if (!contentObject) return null;
 
     // Otherwise, return the current content's ID
-    return content.getID();
+    return contentObject.getID();
 }
 
 /**
@@ -95,7 +154,7 @@ export function getCurrentContentID() {
  */
 export function getSiblings({
     contents = getContents(),
-    contentTypeID = getCurrentContentTypeID()
+    contentTypeID = getContentTypeID()
 } = {}) {
     // Return the contents filtered for ones matching the content type ID
     return contents.filter(
@@ -149,8 +208,11 @@ export function getPageInfo(contents = getSiblings()) {
  */
 export function getGroupInfo({
     contents = getContents(),
-    contentTypeID = getCurrentContentTypeID()
+    contentTypeID = getContentTypeID()
 } = {}) {
+    // If there are no contents, return an empty array
+    if (!contents.length) return [];
+
     // Initialize the group ID...
     let id = 0;
     // ... and offset
@@ -238,8 +300,8 @@ export function getGroupInfo({
  */
 export function getInfo({
     sectionID = section.getID(),
-    contentTypeID = getCurrentContentTypeID(),
-    contentID: id = getCurrentContentID()
+    contentTypeID = getContentTypeID(),
+    contentID: id = getContentID()
 } = {}) {
     // Grab an array of page contents,...
     const contents = getContents(sectionID);
