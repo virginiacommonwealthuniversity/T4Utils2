@@ -48,6 +48,7 @@ export function getPublishLink(section) {
     // If no publish link has been set, set it
     setPublishLink(section);
 
+    // Otherwise, return the publish link
     return publishLink;
 }
 
@@ -63,7 +64,9 @@ export function sectionTitle(section) {
     // If no publish link has been set, set it
     setPublishLink(section);
 
-    // Return the section's title
+    // If there's no publish link set, return null...
+    if (!publishLink) return null;
+    // ... otherwise, return the section's title
     return publishLink.getText();
 }
 
@@ -79,7 +82,9 @@ export function sectionLink(section) {
     // If no publish link has been set, set it
     setPublishLink(section);
 
-    // Return the section's link
+    // If there's no publish link set, return null...
+    if (!publishLink) return null;
+    // ... otherwise, return the section's link
     return publishLink.getLink();
 }
 
@@ -97,7 +102,9 @@ export function anchorLink(section) {
     // ... and text
     const text = sectionTitle(section);
 
-    // Finally, return an anchor link with the url/text
+    // If no URL/text was found, return null...
+    if (!url || !text) return null;
+    // ... otherwise, return an anchor link with the url/text
     return `<a href="${ url }">${ text }</a>`;
 }
 
@@ -110,6 +117,9 @@ export function anchorLink(section) {
  * T4Utils.getSectionInfo.getDirectory(section);
  */
 export function getDirectory(section) {
+    // If no section was provided, return null...
+    if (!section) return null;
+    // ... otherwise, return the section's directory as a string
     return PathBuilder.getDirectory(
         section,
         publishCache,
@@ -127,6 +137,9 @@ export function getDirectory(section) {
  * T4Utils.getSectionInfo.getChildren(section, boolean);
  */
 export function getChildren(section, removeHidden = false) {
+    // If there isn't a section, return an empty array...
+    if (!section) return [];
+    // ... otherwise, return the section's children
     return Array.from(
         section.getChildren(
             publishCache.channel,
@@ -145,6 +158,9 @@ export function getChildren(section, removeHidden = false) {
  * T4Utils.getSectionInfo.getLevel(section);
  */
 export function getLevel(section) {
+    // If no section was provided, return null...
+    if (!section) return null;
+    // ... otherwise, return the provided section's level
     return section.getLevel(publishCache.channel);
 }
 
@@ -160,6 +176,9 @@ export function getLevel(section) {
  * T4Utils.getSectionInfo.getPathUntilLevel(2, section); // Go until two levels up
  */
 export function getPathUntilLevel(level, section, path = []) {
+    // If no section was provided, return the path
+    if (!section) return path;
+
     // Push the given section into the path
     path.push(section);
 
@@ -167,7 +186,7 @@ export function getPathUntilLevel(level, section, path = []) {
     const currentLevel = getLevel(section);
 
     // If the final level if the current level, return the path
-    if (level === currentLevel) return path;
+    if (currentLevel != 'undefined' && level === currentLevel) return path;
 
     // Otherwise, get the parent of the section...
     const parentSection = section.getParent();
@@ -198,6 +217,9 @@ export function getRootPath(section) {
  * T4Utils.getSectionInfo.getPathBySteps(1, section); // Go 1 step back, otherwise get the parent
  */
 export function getPathBySteps(steps, section, path = []) {
+    // If no section was provided, return the path
+    if (!section) return path;
+
     // Push the given section into the path
     path.push(section);
 
