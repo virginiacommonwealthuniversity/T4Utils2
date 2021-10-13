@@ -11,6 +11,7 @@ import * as elementInfo from './modules/elementInfo';
 import * as getSectionInfo from './modules/getSectionInfo';
 import * as media from './modules/media';
 import * as ordinalIndicators from './modules/ordinalIndicators';
+import * as publishCache from './modules/publishCache';
 
 export default {
     ...base,
@@ -18,5 +19,6 @@ export default {
     elementInfo,
     getSectionInfo,
     media,
-    ordinalIndicators
+    ordinalIndicators,
+    publishCache
 };
