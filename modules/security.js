@@ -2,35 +2,48 @@
  * security - The Security Module
  * @namespace security
  * @extends T4Utils
- * @author Ben Margevicius <bdm4@case.edu>
- * @version 1.0.0
+ * @contributors Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
+ * @version 2.0.0
  * @example
  * T4Utils.security
  */
-T4Utils.security = T4Utils.security || {};
+
+// Java language package
+importPackage(java.lang);
+
+// Java security package
+importPackage(java.security);
 
 /**
  * Hashes a plaintext string into a SHA-256 hex-encoded string
  * @function security.toSHA256
- * @param {string} plainText - A plaintext string
+ * @param {string} string - A plaintext string
  * @returns {string} a string value of the hash
  * @example
  * T4Utils.security.toSHA256(string);
  */
-T4Utils.security.toSHA256 = function (plainText) {
-    var hash;
+export function toSHA256(string) {
+    let hash;
+
     try {
-        var md = MessageDigest.getInstance('SHA-256'),
-            pwBytes = new java.lang.String(plainText).getBytes('UTF-8');
-        md.update(pwBytes);
-        var hashedBytes = md.digest(),
-            sb = new java.lang.StringBuffer();
-        for (var i = 0; i < hashedBytes.length; i++) {
-            sb.append(java.lang.Integer.toString((hashedBytes[i] & 0xff) + 0x100, 16).substring(1));
+        const messageDigest = MessageDigest.getInstance('SHA-256');
+        const bytes = new java.lang.String(string).getBytes('UTF-8');
+
+        messageDigest.update(bytes);
+
+        const hashedBytes = messageDigest.digest();
+        const stringBuffer = new java.lang.StringBuffer();
+
+        for (let byte = 0; byte < hashedBytes.length; byte++) {
+            stringBuffer.append(java.lang.Integer.toString(
+                (hashedBytes[byte] & 0xff) + 0x100, 16).substring(1)
+            );
         }
-        hash = sb.toString();
+
+        hash = stringBuffer.toString();
     } catch(e) {
         document.write(e);
     }
+
     return hash;
-};
+}
