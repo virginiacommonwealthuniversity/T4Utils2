@@ -13,6 +13,7 @@ import * as media from './modules/media';
 import * as ordinalIndicators from './modules/ordinalIndicators';
 import * as publishCache from './modules/publishCache';
 import * as security from './modules/security';
+import * as siteManager from './modules/siteManager';
 
 export default {
     ...base,
@@ -22,5 +23,6 @@ export default {
     media,
     ordinalIndicators,
     publishCache,
-    security
+    security,
+    siteManager
 };

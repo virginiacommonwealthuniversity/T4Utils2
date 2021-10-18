@@ -2,36 +2,87 @@
  * siteManager - The Site Manage Module
  * @namespace siteManager
  * @extends T4Utils
- * @author Ben Margevicius <bdm4@case.edu>
- * @version 1.0.0
+ * @contributors Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
+ * @version 2.0.0
  * @example
  * T4Utils.siteManager
  */
-T4Utils.siteManager = T4Utils.siteManager || {};
+
+// TerminalFour version class
+importClass(com.terminalfour.TerminalFourVersion);
+
+// Java language package
+importPackage(java.lang);
 
 /**
- * Returns the version of the site manager
- * @constant siteManager.version
- * @returns {string} the site manager version
+ * The build date of the site manager
+ * @constant siteManager.buildDate
+ * @type {string}
  * @example
- * T4Utils.siteManager.version;
+ * T4Utils.siteManager.buildDate;
  */
-T4Utils.siteManager.version = com.terminalfour.sitemanager.SiteManagerVersion.version;
+export const buildDate = TerminalFourVersion.getBuildDate();
 
 /**
- * Returns the build details of the site manager
+ * The build number of the site manager
+ * @constant siteManager.buildNumber
+ * @type {string}
+ * @example
+ * T4Utils.siteManager.buildNumber;
+ */
+export const buildNumber = TerminalFourVersion.getCIBuildNumber();
+
+/**
+ * The formatted build date of the site manager
+ * @constant siteManager.formattedBuildDate
+ * @type {string}
+ * @example
+ * T4Utils.siteManager.formattedBuildDate;
+ */
+export const formattedBuildDate = TerminalFourVersion.getFormattedBuildDate();
+
+/**
+ * The full version info of the site manager
+ * @constant siteManager.fullVersionInfo
+ * @type {string}
+ * @example
+ * T4Utils.siteManager.fullVersionInfo;
+ */
+export const fullVersionInfo = TerminalFourVersion.getFullVersionInformation();
+
+/**
+ * The build details of the site manager (alias of fullVersionInfo)
  * @constant siteManager.buildDetails
- * @returns {string} the site manager built details
+ * @type {string}
+ * @see fullVersionInfo
  * @example
  * T4Utils.siteManager.buildDetails;
  */
-T4Utils.siteManager.buildDetails = com.terminalfour.sitemanager.SiteManagerVersion.buildDetails;
+export const buildDetails = fullVersionInfo;
 
 /**
- * Returns the java version of the site manager
+ * The name of the site manager
+ * @constant siteManager.name
+ * @type {string}
+ * @example
+ * T4Utils.siteManager.name;
+ */
+export const name = TerminalFourVersion.getName();
+
+/**
+ * The version of the site manager
+ * @constant siteManager.version
+ * @type {string}
+ * @example
+ * T4Utils.siteManager.version;
+ */
+export const version = TerminalFourVersion.getVersion();
+
+/**
+ * The Java version of the site manager
  * @constant siteManager.javaVersion
- * @returns {string} the site manager java version
+ * @type {string}
  * @example
  * T4Utils.siteManager.javaVersion;
  */
-T4Utils.siteManager.javaVersion = java.lang.System.getProperty('java.version');
+export const javaVersion = System.getProperty('java.version');

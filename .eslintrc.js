@@ -27,7 +27,9 @@ module.exports = {
         'publishCache': true,
         'section': true,
         'SiteManagerVersion': true,
+        'System': true,
         'T4Utils': true,
+        'TerminalFourVersion': true,
         'TreeTraversalUtils': true
     },
     ignorePatterns: [
