@@ -1,9 +1,14 @@
 const glob = require('glob');
 const path = require('path');
 
+// Sources
 const index = path.join(__dirname, 'index.js');
 const readme = path.join(__dirname, 'readme.md');
 const modules = glob.sync(path.join(__dirname, 'modules/*.js'));
+
+// Static files
+const changelog = path.join(__dirname, 'changelog.md');
+const contribute = path.join(__dirname, 'contribute.md');
 
 module.exports = {
     opts: {
@@ -16,5 +21,15 @@ module.exports = {
             readme,
             ...modules
         ]
+    },
+    templates: {
+        default: {
+            staticFiles: {
+                include: [
+                    changelog,
+                    contribute
+                ]
+            }
+        }
     }
 };
