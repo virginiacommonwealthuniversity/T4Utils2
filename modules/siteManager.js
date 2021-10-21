@@ -1,8 +1,9 @@
 /**
- * siteManager - The Site Manage Module
- * @namespace siteManager
+ * The site manager module
+ * @module siteManager
  * @extends T4Utils
- * @contributors Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
+ * @author Joel Eisner <eisnerjr@vcu.edu>
+ * @author Ben Margevicius <bdm4@case.edu>
  * @version 2.0.0
  * @example
  * T4Utils.siteManager
@@ -16,7 +17,8 @@ importPackage(java.lang);
 
 /**
  * The build date of the site manager
- * @constant siteManager.buildDate
+ * @constant buildDate
+ * @static
  * @type {string}
  * @example
  * T4Utils.siteManager.buildDate;
@@ -25,7 +27,8 @@ export const buildDate = TerminalFourVersion.getBuildDate();
 
 /**
  * The build number of the site manager
- * @constant siteManager.buildNumber
+ * @constant buildNumber
+ * @static
  * @type {string}
  * @example
  * T4Utils.siteManager.buildNumber;
@@ -34,7 +37,8 @@ export const buildNumber = TerminalFourVersion.getCIBuildNumber();
 
 /**
  * The formatted build date of the site manager
- * @constant siteManager.formattedBuildDate
+ * @constant formattedBuildDate
+ * @static
  * @type {string}
  * @example
  * T4Utils.siteManager.formattedBuildDate;
@@ -43,7 +47,8 @@ export const formattedBuildDate = TerminalFourVersion.getFormattedBuildDate();
 
 /**
  * The full version info of the site manager
- * @constant siteManager.fullVersionInfo
+ * @constant fullVersionInfo
+ * @static
  * @type {string}
  * @example
  * T4Utils.siteManager.fullVersionInfo;
@@ -52,7 +57,8 @@ export const fullVersionInfo = TerminalFourVersion.getFullVersionInformation();
 
 /**
  * The build details of the site manager (alias of fullVersionInfo)
- * @constant siteManager.buildDetails
+ * @constant buildDetails
+ * @static
  * @type {string}
  * @see fullVersionInfo
  * @example
@@ -62,7 +68,8 @@ export const buildDetails = fullVersionInfo;
 
 /**
  * The name of the site manager
- * @constant siteManager.name
+ * @constant name
+ * @static
  * @type {string}
  * @example
  * T4Utils.siteManager.name;
@@ -71,7 +78,8 @@ export const name = TerminalFourVersion.getName();
 
 /**
  * The version of the site manager
- * @constant siteManager.version
+ * @constant version
+ * @static
  * @type {string}
  * @example
  * T4Utils.siteManager.version;
@@ -80,7 +88,8 @@ export const version = TerminalFourVersion.getVersion();
 
 /**
  * The Java version of the site manager
- * @constant siteManager.javaVersion
+ * @constant javaVersion
+ * @static
  * @type {string}
  * @example
  * T4Utils.siteManager.javaVersion;

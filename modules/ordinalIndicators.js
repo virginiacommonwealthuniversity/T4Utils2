@@ -1,6 +1,6 @@
 /**
- * The ordinal indicators Module
- * @namespace ordinalIndicators
+ * The ordinal indicators module
+ * @module ordinalIndicators
  * @extends T4Utils
  * @author Joel Eisner <eisnerjr@vcu.edu>
  * @version 2.1.0
@@ -28,9 +28,10 @@ importPackage(com.terminalfour.content);
 
 /**
  * Gets the contents IDs of a given section ID
- * @function ordinalIndicators.getContentsIDs
- * @param {?number} sectionID The ID of a section
- * @returns {array} An array of contents IDs
+ * @function getContentsIDs
+ * @static
+ * @param {?number} [sectionID=section.getID()] The ID of a section
+ * @returns {Array} An array of contents IDs
  * @example
  * T4Utils.ordinalIndicators.getContentsIDs();
  */
@@ -49,9 +50,10 @@ export function getContentsIDs(sectionID = section.getID()) {
 
 /**
  * Gets the content object of a given content ID
- * @function ordinalIndicators.getContent
+ * @function getContent
+ * @static
  * @param {number} contentID The ID of a piece of content
- * @returns {object} A content object
+ * @returns {Object} A content object
  * @example
  * T4Utils.ordinalIndicators.getContent(1234);
  */
@@ -64,8 +66,9 @@ export function getContent(contentID) {
 
 /**
  * Returns whether a piece of content is active (approved/pending) or not
- * @function ordinalIndicators.contentIsActive
- * @param {object} contentObject The content object
+ * @function contentIsActive
+ * @static
+ * @param {Object} contentObject The content object
  * @returns {boolean} Whether the content is active or not
  * @example
  * T4Utils.ordinalIndicators.contentIsActive(content);
@@ -76,8 +79,9 @@ export function contentIsActive(contentObject) {
 
 /**
  * Returns whether a piece of content will publish or not
- * @function ordinalIndicators.contentWillPublish
- * @param {object} contentObject The content object
+ * @function contentWillPublish
+ * @static
+ * @param {Object} contentObject The content object
  * @returns {boolean} Whether the content will publish or not
  * @example
  * T4Utils.ordinalIndicators.contentWillPublish(content);
@@ -88,9 +92,10 @@ export function contentWillPublish(contentObject) {
 
 /**
  * Gets an array of page contents
- * @function ordinalIndicators.getCcontents
- * @param {?number} sectionID The section ID to grab page contents from
- * @returns {array} An array of page contents
+ * @function getContents
+ * @static
+ * @param {?number} [sectionID=section.getID()] The section ID to grab page contents from
+ * @returns {Array} An array of page contents
  * @example
  * T4Utils.ordinalIndicators.getContents();
  */
@@ -110,8 +115,9 @@ export function getContents(sectionID = section.getID()) {
 
 /**
  * Gets a content object's content type ID
- * @function ordinalIndicators.getContentTypeID
- * @param {?object} contentObject The content object
+ * @function getContentTypeID
+ * @static
+ * @param {?Object} [contentObject=content] The content object
  * @returns {number} The content type ID
  * @example
  * T4Utils.ordinalIndicators.getContentTypeID(); // Current content
@@ -127,8 +133,9 @@ export function getContentTypeID(contentObject = content) {
 
 /**
  * Gets a content object's ID
- * @function ordinalIndicators.getContentID
- * @param {?object} contentObject The content object
+ * @function getContentID
+ * @static
+ * @param {?Object} [contentObject=content] The content object
  * @returns {number} The current content's ID
  * @example
  * T4Utils.ordinalIndicators.getContentID(); // Current content
@@ -144,11 +151,14 @@ export function getContentID(contentObject = content) {
 
 /**
  * Gets an array of siblings (contents of the same kind as the current content)
- * @function ordinalIndicators.getSiblings
- * @param {?object} information An object of content information
- * @param {?array} information.contents An array of contents (defaults to page contents)
- * @param {?number} information.contentTypeID The content type ID to match siblings against
- * @returns {array} An array of sibling content types
+ * @function getSiblings
+ * @static
+ * @param {?Object} information An object of content information
+ * @param {?Array} [information.contents=getContents()] An array of contents (defaults to page contents)
+ * @param {?number} [information.contentTypeID=getContentTypeID()] The content type ID to match siblings against
+ * @see getContents
+ * @see getContentTypeID
+ * @returns {Array} An array of sibling content types
  * @example
  * T4Utils.ordinalIndicators.getSiblings();
  */
@@ -164,9 +174,11 @@ export function getSiblings({
 
 /**
  * Gets an array of content page information
- * @function ordinalIndicators.getPageInfo
- * @param {?array} contents An array of contents (defaults to sibling contents)
- * @returns {array} An array of content page information
+ * @function getPageInfo
+ * @static
+ * @param {?Array} [contents=getSiblings()] An array of contents (defaults to sibling contents)
+ * @see getSiblings
+ * @returns {Array} An array of content page information
  * @example
  * T4Utils.ordinalIndicators.getPageInfo();
  */
@@ -198,11 +210,13 @@ export function getPageInfo(contents = getSiblings()) {
 
 /**
  * Gets an array of content group information
- * @function ordinalIndicators.getGroupInfo
- * @param {?object} information An object of content information
- * @param {?array} information.contents An array of contents (defaults to page contents)
- * @param {?number} information.contentTypeID The content type ID to match siblings against
- * @returns {array} An array of content group information
+ * @function getGroupInfo
+ * @param {?Object} information An object of content information
+ * @param {?Array} [information.contents=getContents()] An array of contents (defaults to page contents)
+ * @param {?number} [information.contentTypeID=getContentTypeID()] The content type ID to match siblings against
+ * @see getContents
+ * @see getContentTypeID
+ * @returns {Array} An array of content group information
  * @example
  * T4Utils.ordinalIndicators.getGroupInfo()
  */
@@ -289,12 +303,15 @@ export function getGroupInfo({
 
 /**
  * Gets page/group info for a specific piece of content
- * @function ordinalIndicators.getInfo
- * @param {?object} information An object of content information
- * @param {?number} information.sectionID The section ID to get content information from
- * @param {?number} information.contentTypeID The content type ID to match siblings against
- * @param {?number} information.contentID The content ID to filter results against
- * @returns {object} An object of page/group information of the given piece of content
+ * @function getInfo
+ * @static
+ * @param {?Object} information An object of content information
+ * @param {?number} [information.sectionID=section.getID()] The section ID to get content information from
+ * @param {?number} [information.contentTypeID=getContentTypeID()] The content type ID to match siblings against
+ * @param {?number} [information.contentID=getContentID()] The content ID to filter results against
+ * @see getContentTypeID
+ * @see getContentID
+ * @returns {Object} An object of page/group information of the given piece of content
  * @example
  * T4Utils.ordinalIndicators.getInfo()
  */
@@ -322,8 +339,10 @@ export function getInfo({
 
 /**
  * Find information about the content within context to the page and group
- * @constant ordinalIndicators.info
- * @returns {Object} an object containing information such as index, count, first, last, etc. within context to the page and group
+ * @constant info
+ * @static
+ * @type {Object}
+ * @see getInfo
  * @example
  * T4Utils.ordinalIndicators.info;
  */
@@ -331,8 +350,10 @@ export const info = getInfo();
 
 /**
  * Find information about the content within context to the page
- * @constant ordinalIndicators.pageInfo
- * @returns {Object} an object containing information such as index, count, first, last, etc. within context to the page
+ * @constant pageInfo
+ * @static
+ * @type {Object}
+ * @see info
  * @example
  * T4Utils.ordinalIndicators.pageInfo;
  */
@@ -340,8 +361,10 @@ export const { page: pageInfo } = info;
 
 /**
  * Find how many pieces of content of the same kind are on the page
- * @constant ordinalIndicators.pageCount
- * @returns {Number} an integer representing the amount of pieces of content of the same kind on the page
+ * @constant pageCount
+ * @static
+ * @type {number}
+ * @see pageInfo
  * @example
  * T4Utils.ordinalIndicators.pageCount;
  */
@@ -349,8 +372,10 @@ export const { count: pageCount } = pageInfo;
 
 /**
  * Find if the position of the content within context to the page is the first of its kind
- * @constant ordinalIndicators.pageFirst
- * @returns {Boolean} a boolean value; true if first, false if not
+ * @constant pageFirst
+ * @static
+ * @type {boolean}
+ * @see pageInfo
  * @example
  * T4Utils.ordinalIndicators.pageFirst;
  */
@@ -358,8 +383,10 @@ export const { first: pageFirst } = pageInfo;
 
 /**
  * Find the index of the content within context to the page
- * @constant ordinalIndicators.pageIndex
- * @returns {Number} an integer representing the content's positon on the page (starts from 0)
+ * @constant pageIndex
+ * @static
+ * @type {number}
+ * @see pageInfo
  * @example
  * T4Utils.ordinalIndicators.pageIndex;
  */
@@ -367,8 +394,10 @@ export const { index: pageIndex } = pageInfo;
 
 /**
  * Find if the position of the content within context to the page is the last of its kind
- * @constant ordinalIndicators.pageLast
- * @returns {Boolean} a boolean value; true if last, false if not
+ * @constant pageLast
+ * @static
+ * @type {boolean}
+ * @see pageInfo
  * @example
  * T4Utils.ordinalIndicators.pageLast;
  */
@@ -376,8 +405,10 @@ export const { last: pageLast } = pageInfo;
 
 /**
  * Find information about the content within context to the group
- * @constant ordinalIndicators.groupInfo
- * @returns {Object} an object containing information such as index, count, first, last, etc. within context to the group
+ * @constant groupInfo
+ * @static
+ * @type {Object}
+ * @see info
  * @example
  * T4Utils.ordinalIndicators.groupInfo;
  */
@@ -385,8 +416,10 @@ export const { group: groupInfo } = info;
 
 /**
  * Find how many groups of the content's kind are on the page
- * @constant ordinalIndicators.groupAmount
- * @returns {Number} an integer representing how many groups of the content's kind are on the page
+ * @constant groupAmount
+ * @static
+ * @type {number}
+ * @see groupInfo
  * @example
  * T4Utils.ordinalIndicators.groupAmount;
  */
@@ -394,8 +427,10 @@ export const { amount: groupAmount } = groupInfo;
 
 /**
  * Find how many pieces of content are within the content's group
- * @constant ordinalIndicators.groupCount
- * @returns {Number} an integer representing how many pieces of content are withing the content's group
+ * @constant groupCount
+ * @static
+ * @type {number}
+ * @see groupInfo
  * @example
  * T4Utils.ordinalIndicators.groupCount;
  */
@@ -403,8 +438,10 @@ export const { count: groupCount } = groupInfo;
 
 /**
  * Find if the position of the content within context to a group of the same content-type is the first of its kind
- * @constant ordinalIndicators.groupFirst
- * @returns {Boolean} a boolean value; true if first, false if not
+ * @constant groupFirst
+ * @static
+ * @type {boolean}
+ * @see groupInfo
  * @example
  * T4Utils.ordinalIndicators.groupFirst;
  */
@@ -412,8 +449,10 @@ export const { first: groupFirst } = groupInfo;
 
 /**
  * Find the id of the content's group
- * @constant ordinalIndicators.groupID
- * @returns {Number} an integer representing the id of the content's group
+ * @constant groupID
+ * @static
+ * @type {number}
+ * @see groupInfo
  * @example
  * T4Utils.ordinalIndicators.groupID;
  */
@@ -421,8 +460,10 @@ export const { id: groupID } = groupInfo;
 
 /**
  * Find the index of the content within context of its group
- * @constant ordinalIndicators.groupIndex
- * @returns {Number} an integer representing the content's positon in the group (starts from 0)
+ * @constant groupIndex
+ * @static
+ * @type {number}
+ * @see groupInfo
  * @example
  * T4Utils.ordinalIndicators.groupIndex;
  */
@@ -430,8 +471,10 @@ export const { index: groupIndex } = groupInfo;
 
 /**
  * Find if the position of the content within context to a group of the same content-type is the last of its kind
- * @constant ordinalIndicators.groupLast
- * @returns {Boolean} a boolean value; true if last, false if not
+ * @constant groupLast
+ * @static
+ * @type {boolean}
+ * @see groupInfo
  * @example
  * T4Utils.ordinalIndicators.groupLast;
  */

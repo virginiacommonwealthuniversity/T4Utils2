@@ -24,7 +24,6 @@ module.exports = {
     output: {
         filename: 'T4Utils.js',
         library: {
-            export: 'default',
             name: 'T4Utils',
             type: 'var'
         },

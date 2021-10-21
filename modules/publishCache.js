@@ -1,6 +1,6 @@
 /**
- * publishCache - The Publish Cache Module
- * @namespace publishCache
+ * The publish cache module
+ * @module publishCache
  * @extends T4Utils
  * @author Joel Eisner <eisnerjr@vcu.edu>
  * @version 2.0.0
@@ -14,6 +14,8 @@ importClass(com.terminalfour.publish.utils.TreeTraversalUtils);
 /**
  * The current section
  * @constant currentSection
+ * @static
+ * @type {Object}
  * @example
  * T4Utils.publishCache.currentSection;
  */
@@ -21,8 +23,9 @@ export const currentSection = section;
 
 /**
  * Gets the channel
- * @function publishCache.getChannel
- * @returns {object} The channel
+ * @function getChannel
+ * @static
+ * @returns {Object} The channel
  * @example
  * T4Utils.publishCache.getChannel();
  */
@@ -32,9 +35,10 @@ export function getChannel() {
 
 /**
  * Gets the microsite of a given section
- * @function publishCache.getMicrosite
- * @param {object} [section=currentSection] The section to retrieve the microsite from
- * @returns {?object} The microsite
+ * @function getMicrosite
+ * @static
+ * @param {?Object} [section=currentSection] The section to retrieve the microsite from
+ * @returns {Object|null} The microsite
  * T4Utils.publishCache.getMicrosite();
  */
 export function getMicrosite(section = currentSection) {
@@ -43,9 +47,10 @@ export function getMicrosite(section = currentSection) {
 
 /**
  * Gets the microsite or channel of a given section
- * @function publishCache.getMicrositeOrChannel
- * @param {object} [section=currentSection] The section to get data from
- * @returns {object} The microsite or channel
+ * @function getMicrositeOrChannel
+ * @static
+ * @param {?Object} [section=currentSection] The section to get data from
+ * @returns {Object} The microsite or channel
  * @example
  * T4Utils.publishCache.getMicrositeOrChannel();
  */
@@ -61,9 +66,10 @@ export function getMicrositeOrChannel(section = currentSection) {
 
 /**
  * Returns an array of channel microsites
- * @function publishCache.getMicrosites
- * @param {object} [channel=getChannel()] The global channel object
- * @returns {array} An array of microsites
+ * @function getMicrosites
+ * @static
+ * @param {?Object} [channel=getChannel()] The global channel object
+ * @returns {Array} An array of microsites
  * @example
  * T4Utils.publishCache.getMicrosites(channel);
  */
@@ -86,12 +92,13 @@ export function getMicrosites(channel = getChannel()) {
 
 /**
  * Returns an object of root section data of a microsite or channel
- * @function publishCache.getRootSectionData
- * @param {?obect} instructions The instructions for retrieving the root section data
- * @param {?object} instructions.microsite The microsite
- * @param {?object} [instructions.channel=getChannel()] The global channel object
- * @param {?object} [instructions.section=currentSection] The section to check against
- * @returns {object} The root section data
+ * @function getRootSectionData
+ * @static
+ * @param {?Object} instructions The instructions for retrieving the root section data
+ * @param {?Object} instructions.microsite The microsite
+ * @param {?Object} [instructions.channel=getChannel()] The global channel object
+ * @param {?Object} [instructions.section=currentSection] The section to check against
+ * @returns {Object} The root section data
  * @example
  * T4Utils.publishCache.getRootSectionData(microsite, channel);
  */
@@ -124,12 +131,13 @@ export function getRootSectionData({
 
 /**
  * Returns an object of microsite or channel data
- * @function publishCache.getChannelData
- * @param {?obect} instructions The instructions for retrieving the root section data
- * @param {?object} instructions.microsite The microsite
- * @param {?object} [instructions.channel=getChannel()] The global channel object
- * @param {?object} [instructions.section=currentSection] The section to check against
- * @returns {object} The microsite or channel data
+ * @function getChannelData
+ * @static
+ * @param {?Obect} instructions The instructions for retrieving the root section data
+ * @param {?Object} instructions.microsite The microsite
+ * @param {?Object} [instructions.channel=getChannel()] The global channel object
+ * @param {?Object} [instructions.section=currentSection] The section to check against
+ * @returns {Object} The microsite or channel data
  * @example
  * T4Utils.publishCache.getChannelData();
  */
@@ -176,8 +184,10 @@ export function getMicrositeOrChannelData({
 
 /**
  * Retrieve microsite data
- * @constant publishCache.microsite
- * @returns {object} and object containing microsite information
+ * @constant microsite
+ * @static
+ * @type {Object}
+ * @see getMicrositeOrChannelData
  * @example
  * T4Utils.publishCache.microsite;
  */
@@ -185,8 +195,10 @@ export const microsite = getMicrositeOrChannelData({ microsite: getMicrosite() }
 
 /**
  * Retrieve channel data
- * @constant publishCache.channel
- * @returns {object} and object containing channel information
+ * @constant channel
+ * @static
+ * @type {Object}
+ * @see getMicrositeOrChannelData
  * @example
  * T4Utils.publishCache.channel;
  */

@@ -1,8 +1,9 @@
 /**
  * The section information module
- * @namespace getSectionInfo
+ * @module getSectionInfo
  * @extends T4Utils
- * @contributors Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
+ * @author Joel Eisner <eisnerjr@vcu.edu>
+ * @author Ben Margevicius <bdm4@case.edu>
  * @version 2.0.0
  * @example
  * T4Utils.getSectionInfo
@@ -13,6 +14,9 @@ importClass(com.terminalfour.publish.PathBuilder);
 
 /**
  * Stores a link to a section
+ * @var publishLink
+ * @static
+ * @type {null|string}
  * @example
  * T4Utils.getSectionInfo.publishLink
  */
@@ -20,9 +24,10 @@ export let publishLink;
 
 /**
  * Sets a link to this section (no return; sets local 'publishLink' variable)
- * @function getSectionInfo.setPublishLink
- * @param {section} section The global section object
- * @returns {null} sets the getSectionInfo's publish link
+ * @function setPublishLink
+ * @static
+ * @param {section} section The section object
+ * @returns {null} Sets the publish link
  * @example
  * T4Utils.getSectionInfo.setPublishLink(section);
  */
@@ -38,9 +43,10 @@ export function setPublishLink(section) {
 
 /**
  * Gets the publish link from a local variable (requires setPublishLink)
- * @function getSectionInfo.getPublishLink
- * @param {section} section The global section object
- * @returns {string} the publishing Link
+ * @function getPublishLink
+ * @static
+ * @param {section} section The section object
+ * @returns {string} The publishing Link
  * @example
  * T4Utils.getSectionInfo.getPublishLink();
  */
@@ -54,9 +60,10 @@ export function getPublishLink(section) {
 
 /**
  * Gets the section title for the section passed in
- * @function getSectionInfo.sectionTitle
- * @param {Object} section The global section object
- * @returns {string} the name of the section
+ * @function sectionTitle
+ * @static
+ * @param {Object} section The section object
+ * @returns {string} The name of the section
  * @example
  * T4Utils.getSectionInfo.sectionTitle(section);
  */
@@ -72,9 +79,10 @@ export function sectionTitle(section) {
 
 /**
  * Gets the section link for the section passed in
- * @function getSectionInfo.sectionLink
- * @param {Object} section The global section object
- * @returns {string} the link to the section
+ * @function sectionLink
+ * @static
+ * @param {Object} section The section object
+ * @returns {string} The link to the section
  * @example
  * T4Utils.getSectionInfo.sectionLink(section);
  */
@@ -90,9 +98,10 @@ export function sectionLink(section) {
 
 /**
  * Gets the section anchor link for the section passed in
- * @function getSectionInfo.anchorLink
- * @param {section} section The global section object
- * @returns {string} the HTML anchor link to the section
+ * @function anchorLink
+ * @static
+ * @param {section} section The section object
+ * @returns {string} The HTML anchor link to the section
  * @example
  * T4Utils.getSectionInfo.anchorLink(section);
  */
@@ -110,9 +119,10 @@ export function anchorLink(section) {
 
 /**
  * Gets the directory for the section passed in
- * @function getSectionInfo.getDirectory
- * @param {section} section The global section object
- * @returns {string} the directory on the filesystem that this section will be published to
+ * @function getDirectory
+ * @static
+ * @param {section} section The section object
+ * @returns {string} The directory on the server that the section will publish to
  * @example
  * T4Utils.getSectionInfo.getDirectory(section);
  */
@@ -129,10 +139,11 @@ export function getDirectory(section) {
 
 /**
  * Gets the children for the section passed in
- * @function getSectionInfo.getChildren
- * @param {section} section The global section object
- * @param {?boolean} removeHidden If true, then the function will not return hidden sections
- * @returns {Array} an array of children of the passed in section
+ * @function getChildren
+ * @static
+ * @param {section} section The section object
+ * @param {?boolean} [removeHidden=false] Whether hidden sections should be removed
+ * @returns {Array} An array of children of the passed in section
  * @example
  * T4Utils.getSectionInfo.getChildren(section, boolean);
  */
@@ -151,9 +162,10 @@ export function getChildren(section, removeHidden = false) {
 
 /**
  * Gets the level at which the section lives
- * @function getSectionInfo.getLevel
- * @param {Cachedsection} section The global section object
- * @returns {int} an integer of the level at which the section lives
+ * @function getLevel
+ * @static
+ * @param {Cachedsection} section The section object
+ * @returns {int} An integer of the level at which the section lives
  * @example
  * T4Utils.getSectionInfo.getLevel(section);
  */
@@ -166,14 +178,15 @@ export function getLevel(section) {
 
 /**
  * Gets an array of paths until the specified level
- * @function getSectionInfo.getPathUntilLevel
- * @param {int} level How far down you want to traverse
- * @param {section} section The global section object
- * @param {Array} path Used for recursively finding the path to level
- * @returns {Array} an array of paths from the current section until we get to a certain level
+ * @function getPathUntilLevel
+ * @static
+ * @param {int} level The level to traverse until
+ * @param {section} section The section object
+ * @param {?Array} [path=[]] The path array for recursion
+ * @returns {Array} An array of paths from the current section until the given level
  * @example
  * T4Utils.getSectionInfo.getPathUntilLevel(0, section); // Go until root
- * T4Utils.getSectionInfo.getPathUntilLevel(2, section); // Go until two levels up
+ * T4Utils.getSectionInfo.getPathUntilLevel(2, section); // Go until level 2
  */
 export function getPathUntilLevel(level, section, path = []) {
     // If no section was provided, return the path
@@ -196,9 +209,10 @@ export function getPathUntilLevel(level, section, path = []) {
 
 /**
  * Gets the path to root from currentSection
- * @function getSectionInfo.getRootPath
- * @param {section} section - The global section object
- * @returns {Array} an array of sections until root (includes the current section)
+ * @function getRootPath
+ * @static
+ * @param {section} section The section object
+ * @returns {Array} An array of sections until root (includes the current section)
  * @example
  * T4Utils.getSectionInfo.getRootPath(section);
  */
@@ -208,11 +222,12 @@ export function getRootPath(section) {
 
 /**
  * Gets a path from the current section until we are N steps up from root
- * @function getSectionInfo.getPathBySteps
- * @param {int} steps - How far up do you want to traverse
- * @param {section} section - The global section object
- * @param {Array} path - Used for recursively finding the path to finalLevel
- * @returns {Array} an array of paths from the current section until we get to a certain level
+ * @function getPathBySteps
+ * @static
+ * @param {int} steps How many steps up to traverse
+ * @param {section} section The section object
+ * @param {?Array} [path=[]] The path array for recursion
+ * @returns {Array} An array of paths from the current section until n number of steps up
  * @example
  * T4Utils.getSectionInfo.getPathBySteps(1, section); // Go 1 step back, otherwise get the parent
  */

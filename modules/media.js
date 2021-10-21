@@ -1,9 +1,11 @@
 /**
  * The media library module
- * @namespace media
+ * @module media
  * @extends T4Utils
+ * @author Joel Eisner <eisnerjr@vcu.edu>
  * @author Ben Margevicius <bdm4@case.edu>
- * @version 1.0.0
+ * @version 2.0.0
+ * @requires module:elementInfo
  * @example
  * T4Utils.media
  */
@@ -18,10 +20,16 @@ importPackage(com.terminalfour.media);
 importPackage(com.terminalfour.media.utils);
 
 /**
+ * The ID of the media, the name of the media element from the content type, or a media object
+ * @typedef {(number|string|object)} MediaReference
+ */
+
+/**
  * Gets a media ID
- * @function media.getMediaID
- * @param {number|string|object} media The ID of the media, the name of the media element from the content type, or a media object
- * @returns {number} a media ID
+ * @function getMediaID
+ * @static
+ * @param {MediaReference} media The media reference
+ * @returns {number} The media's ID
  * @example
  * T4Utils.media.getMediaID(12345); // Media ID (returns as-is)
  * T4Utils.media.getMediaID('Image'); // Media element
@@ -40,9 +48,10 @@ export function getMediaID(media) {
 
 /**
  * Gets a media object by id
- * @function media.getMediaObject
- * @param {number|string|object} media The ID of the media, the name of the media element from the content type, or a media object
- * @returns {object} a media object
+ * @function getMediaObject
+ * @static
+ * @param {MediaReference} media The media reference
+ * @returns {object} The media object
  * @example
  * T4Utils.media.getMediaObject(12345); // Media ID
  * T4Utils.media.getMediaObject('Image'); // Media element
@@ -65,9 +74,11 @@ export function getMediaObject(media) {
 }
 
 /**
- * Gets an array of image-variant ids
- * @function media.getImageVariantsIds
- * @param {number|string|object} media The ID of the media, the name of the media element from the content type, or a media object
+ * Gets an array of image variant IDs
+ * @function getImageVariantsIds
+ * @static
+ * @param {MediaReference} media The media reference
+ * @see getMediaID
  * @returns {Array} An array of image variant ids
  * @example
  * T4Utils.media.getImageVariantsIds(12345); // Media ID
@@ -88,10 +99,20 @@ export function getImageVariantsIds(media) {
 }
 
 /**
+ * Width and height dimensions
+ * @typedef {Object} Dimensions
+ * @property {number} width
+ * @property {number} height
+ */
+
+/**
  * Gets the dimensions of a media object (picture)
- * @function media.getImageDimensions
- * @param {number|string|object} media The ID of the media, the name of the media element from the content type, or a media object
- * @returns {object} an object that has two properties; width and height
+ * @function getImageDimensions
+ * @static
+ * @param {MediaReference} media The media reference
+ * @see getMediaID
+ * @see getMediaObject
+ * @returns {Dimensions} An dimensions object
  * @example
  * T4Utils.media.getImageDimensions(12345); // Media ID
  * T4Utils.media.getImageDimensions('Image'); // Media element

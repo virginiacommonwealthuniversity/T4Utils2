@@ -1,8 +1,9 @@
 /**
  * security - The Security Module
- * @namespace security
+ * @module security
  * @extends T4Utils
- * @contributors Ben Margevicius <bdm4@case.edu>, Joel Eisner <eisnerjr@vcu.edu>
+ * @author Joel Eisner <eisnerjr@vcu.edu>
+ * @author Ben Margevicius <bdm4@case.edu>
  * @version 2.0.0
  * @example
  * T4Utils.security
@@ -16,9 +17,10 @@ importPackage(java.security);
 
 /**
  * Hashes a plaintext string into a SHA-256 hex-encoded string
- * @function security.toSHA256
- * @param {string} string - A plaintext string
- * @returns {string} a string value of the hash
+ * @function toSHA256
+ * @static
+ * @param {string} string A plaintext string
+ * @returns {string} A string of the hash
  * @example
  * T4Utils.security.toSHA256(string);
  */
