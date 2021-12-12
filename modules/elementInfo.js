@@ -10,7 +10,7 @@
  */
 
 // Grab whether the context is the page or not
-import { contextIsPage } from '..';
+import { contextIsPage } from '../index.js';
 
 /**
  * Gets all elements within a piece of content

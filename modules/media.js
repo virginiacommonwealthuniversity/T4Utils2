@@ -11,7 +11,7 @@
  */
 
 // Fetches a content element's ID
-import { getElementID } from './elementInfo';
+import { getElementID } from './elementInfo.js';
 
 // Media package
 importPackage(com.terminalfour.media);

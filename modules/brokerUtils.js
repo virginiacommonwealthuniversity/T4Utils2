@@ -10,7 +10,7 @@
  */
 
 // Grab the context
-import { context } from '..';
+import { context } from '../index.js';
 
 // Broker utilities package
 importClass(com.terminalfour.publish.utils.BrokerUtils);

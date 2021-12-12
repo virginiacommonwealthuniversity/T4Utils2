@@ -1,16 +1,36 @@
-const { BannerPlugin } = require('webpack');
-const path = require('path');
-const TerserPlugin = require('terser-webpack-plugin');
+import { URL } from 'node:url';
+
+const paths = {
+    input: new URL('./index.js', import.meta.url).pathname,
+    output: new URL('./dist', import.meta.url).pathname,
+    package: new URL('./package.json', import.meta.url).pathname
+};
+
+const mode = process.env.NODE_ENV;
+
+import TerserPlugin from 'terser-webpack-plugin';
+
+const terserPlugin = new TerserPlugin({
+    extractComments: false
+});
+
+import webpack from 'webpack';
+const { BannerPlugin } = webpack;
+
+import { readFileSync } from 'node:fs';
+
 const {
     version,
     license,
     author
-} = require('./package.json');
+} = JSON.parse(readFileSync(paths.package));
 
-const mode = process.env.NODE_ENV;
+const bannerPlugin = new BannerPlugin({
+    banner: `T4Utils2 v${ version } | ${ license } | ${ author }`
+});
 
-module.exports = {
-    entry: path.join(__dirname, 'index.js'),
+export default {
+    entry: paths.input,
     mode,
     module: {
         rules: [
@@ -27,15 +47,11 @@ module.exports = {
             name: 'T4Utils',
             type: 'var'
         },
-        path: path.join(__dirname, 'dist')
+        path: paths.output
     },
     plugins: [
-        new TerserPlugin({
-            extractComments: false
-        }),
-        new BannerPlugin({
-            banner: `T4Utils2 v${ version } | ${ license } | ${ author }`
-        })
+        terserPlugin,
+        bannerPlugin
     ],
     stats: mode === 'production' ? 'summary' : true,
     target: ['web', 'es5']

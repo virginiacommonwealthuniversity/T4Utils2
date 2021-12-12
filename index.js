@@ -6,9 +6,6 @@
  * @version 2.0.0
  */
 
-// Grab the package information
-import pkg from './package.json';
-
 // Java language package
 importPackage(java.lang);
 
@@ -25,7 +22,7 @@ String.prototype.toJavaString = function () {
  * @example
  * T4Utils.version;
  */
-export const version = pkg.version;
+export const version = '2.0.0';
 
 /**
  * Writes a message to the browser console in preview mode
@@ -164,11 +161,11 @@ export function escapeHtml(html) {
         .replace(/'/g, '&#039;');
 }
 
-export * as brokerUtils from './modules/brokerUtils';
-export * as elementInfo from './modules/elementInfo';
-export * as getSectionInfo from './modules/getSectionInfo';
-export * as media from './modules/media';
-export * as ordinalIndicators from './modules/ordinalIndicators';
-export * as publishCache from './modules/publishCache';
-export * as security from './modules/security';
-export * as siteManager from './modules/siteManager';
+export * as brokerUtils from './modules/brokerUtils.js';
+export * as elementInfo from './modules/elementInfo.js';
+export * as getSectionInfo from './modules/getSectionInfo.js';
+export * as media from './modules/media.js';
+export * as ordinalIndicators from './modules/ordinalIndicators.js';
+export * as publishCache from './modules/publishCache.js';
+export * as security from './modules/security.js';
+export * as siteManager from './modules/siteManager.js';
