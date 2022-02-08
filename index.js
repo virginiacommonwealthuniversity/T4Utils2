@@ -95,7 +95,7 @@ console.error = function(message) {
  * @example
  * T4Utils.context
  */
-export const context = content || null;
+export const context = typeof content === 'undefined' ? null : content;
 
 /**
  * If the context of where the library is being executed from is within a page-layout
