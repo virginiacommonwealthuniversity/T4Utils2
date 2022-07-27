@@ -1,0 +1,53 @@
+env:
+    browser: true
+    es2021: true
+    node: true
+extends: eslint:recommended
+globals:
+    ApplicationContextProvider: readonly
+    BrokerUtils: readonly
+    com: readonly
+    content: readonly
+    ContentHierarchy: readonly
+    ContentManager: readonly
+    currentSection: readonly
+    dbStatement: readonly
+    IContentManager: readonly
+    importClass: readonly
+    importPackage: readonly
+    isPreview: readonly
+    java: readonly
+    language: readonly
+    MediaManager: readonly
+    MediaUtils: readonly
+    MessageDigest: readonly
+    PathBuilder: readonly
+    publishCache: readonly
+    section: readonly
+    SiteManagerVersion: readonly
+    System: readonly
+    TerminalFourVersion: readonly
+    TreeTraversalUtils: readonly
+ignorePatterns:
+    - dist/**/*.js
+    - node_modules/**/*.js
+parserOptions:
+    ecmaVersion: latest
+    sourceType: module
+root: true
+rules:
+    indent:
+        - warn
+        - 4
+    linebreak-style:
+        - warn
+        - unix
+    quotes:
+        - warn
+        - single
+        - { avoidEscape: true, allowTemplateLiterals: true }
+    semi:
+        - warn
+        - always
+    valid-jsdoc:
+        - error
