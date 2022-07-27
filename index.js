@@ -22,7 +22,7 @@ String.prototype.toJavaString = function () {
  * @example
  * T4Utils.version;
  */
-export const version = '2.0.0';
+export const version = VERSION;
 
 /**
  * Writes a message to the browser console in preview mode

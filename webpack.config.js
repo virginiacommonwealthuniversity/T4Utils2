@@ -15,7 +15,7 @@ const terserPlugin = new TerserPlugin({
 });
 
 import webpack from 'webpack';
-const { BannerPlugin } = webpack;
+const { BannerPlugin, DefinePlugin } = webpack;
 
 import { readFileSync } from 'node:fs';
 
@@ -27,6 +27,10 @@ const {
 
 const bannerPlugin = new BannerPlugin({
     banner: `T4Utils2 v${ version } | ${ license } | ${ author }`
+});
+
+const definePlugin = new DefinePlugin({
+    VERSION: JSON.stringify(version)
 });
 
 export default {
@@ -51,7 +55,8 @@ export default {
     },
     plugins: [
         terserPlugin,
-        bannerPlugin
+        bannerPlugin,
+        definePlugin
     ],
     stats: mode === 'production' ? 'summary' : true,
     target: ['web', 'es5']

@@ -28,6 +28,7 @@ globals:
     System: readonly
     TerminalFourVersion: readonly
     TreeTraversalUtils: readonly
+    VERSION: readonly
 ignorePatterns:
     - dist/**/*.js
     - node_modules/**/*.js
