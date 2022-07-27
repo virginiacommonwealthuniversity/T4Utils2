@@ -8,6 +8,7 @@
     "eslint": "^8.4.1",
     "glob": "^8.0.3",
     "jsdoc": "^3.6.7",
+    "pre-commit": "^1.2.2",
     "prettier": "^2.7.1",
     "terser-webpack-plugin": "^5.2.4",
     "webpack": "^5.58.1",
@@ -19,6 +20,10 @@
   "exports": "./index.js",
   "license": "MIT",
   "name": "t4-utils-2",
+  "pre-commit": [
+    "check-formatting",
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/virginiacommonwealthuniversity/T4Utils2.git"
