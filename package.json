@@ -29,7 +29,8 @@
     "develop": "NODE_ENV=development webpack --watch",
     "dev": "npm run develop",
     "docs": "jsdoc -c jsdoc.config.js",
-    "fix-formatting": "prettier --write ."
+    "fix-formatting": "prettier --write .",
+    "lint": "eslint --cache ./modules/**/*.js ./*.js"
   },
   "type": "module",
   "version": "2.0.0"
