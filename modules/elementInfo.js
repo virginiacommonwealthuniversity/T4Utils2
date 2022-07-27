@@ -66,7 +66,7 @@ export function getElement(name, method) {
  * @example
  * T4Utils.elementInfo.getElementValue('name');
  */
-getElement.publish = function(name) {
+getElement.publish = function (name) {
     return this(name, 'publish');
 };
 
@@ -85,7 +85,7 @@ export function getElementValue(name) {
  * @example
  * T4Utils.elementInfo.getElementName('name');
  */
-getElement.getName = function(name) {
+getElement.getName = function (name) {
     return this(name, 'getName');
 };
 
@@ -104,7 +104,7 @@ export function getElementName(name) {
  * @example
  * T4Utils.elementInfo.getElementID('name');
  */
-getElement.getID = function(name) {
+getElement.getID = function (name) {
     return this(name, 'getID');
 };
 

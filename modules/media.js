@@ -59,18 +59,16 @@ export function getMediaID(media) {
  */
 export function getMediaObject(media) {
     // If the provided media is already an object, return it as-is
-    if (![ 'number', 'string' ].includes(typeof media)) return media;
+    if (!['number', 'string'].includes(typeof media)) return media;
 
     // Get the ID of the provided media...
     const id = getMediaID(media);
     // ... and return its corresponding media object
-    return MediaManager
-        .getManager()
-        .get(
-            dbStatement.getConnection(),
-            id,
-            language
-        );
+    return MediaManager.getManager().get(
+        dbStatement.getConnection(),
+        id,
+        language
+    );
 }
 
 /**
@@ -89,13 +87,11 @@ export function getImageVariantsIds(media) {
     // Get the ID of the provided media...
     const id = getMediaID(media);
     // ... and return its corresponding media variant IDs
-    return MediaManager
-        .getManager()
-        .getMediaVariants(
-            dbStatement.getConnection(),
-            id,
-            language
-        );
+    return MediaManager.getManager().getMediaVariants(
+        dbStatement.getConnection(),
+        id,
+        language
+    );
 }
 
 /**
@@ -126,10 +122,7 @@ export function getImageDimensions(media) {
     if (typeof media === 'number') media = getMediaObject(media);
 
     // Grab the width and height of the media object's image dimensions...
-    const [
-        width = 0,
-        height = 0
-    ] = Array.from(
+    const [width = 0, height = 0] = Array.from(
         MediaUtils.getImageDimensions(media)
     );
     // ... and return them as an object

@@ -19,14 +19,10 @@ const { BannerPlugin, DefinePlugin } = webpack;
 
 import { readFileSync } from 'node:fs';
 
-const {
-    version,
-    license,
-    author
-} = JSON.parse(readFileSync(paths.package));
+const { version, license, author } = JSON.parse(readFileSync(paths.package));
 
 const bannerPlugin = new BannerPlugin({
-    banner: `T4Utils2 v${ version } | ${ license } | ${ author }`
+    banner: `T4Utils2 v${version} | ${license} | ${author}`
 });
 
 const definePlugin = new DefinePlugin({
@@ -53,11 +49,7 @@ export default {
         },
         path: paths.output
     },
-    plugins: [
-        terserPlugin,
-        bannerPlugin,
-        definePlugin
-    ],
+    plugins: [terserPlugin, bannerPlugin, definePlugin],
     stats: mode === 'production' ? 'summary' : true,
     target: ['web', 'es5']
 };

@@ -16,19 +16,12 @@ module.exports = {
         recurse: true
     },
     source: {
-        include: [
-            index,
-            readme,
-            ...modules
-        ]
+        include: [index, readme, ...modules]
     },
     templates: {
         default: {
             staticFiles: {
-                include: [
-                    changelog,
-                    contribute
-                ]
+                include: [changelog, contribute]
             }
         }
     }

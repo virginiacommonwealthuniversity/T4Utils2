@@ -40,11 +40,7 @@ export function getContentsIDs(sectionID = section.getID()) {
     const contentHierarchy = new ContentHierarchy();
     // ... and get the contents IDs of a given section ID
     return Array.from(
-        contentHierarchy.getContent(
-            dbStatement,
-            sectionID,
-            'en'
-        )
+        contentHierarchy.getContent(dbStatement, sectionID, 'en')
     );
 }
 
@@ -168,7 +164,7 @@ export function getSiblings({
 } = {}) {
     // Return the contents filtered for ones matching the content type ID
     return contents.filter(
-        object => object.getContentTypeID() === contentTypeID
+        (object) => object.getContentTypeID() === contentTypeID
     );
 }
 
@@ -249,12 +245,17 @@ export function getGroupInfo({
             // Grab the previous piece of content...
             const previous = index ? contents[index - 1] : null;
             // ... and whether it's a sibling (of the same kind)
-            const previousIsSibling = previous ? previous.getContentTypeID() === contentTypeID : false;
+            const previousIsSibling = previous
+                ? previous.getContentTypeID() === contentTypeID
+                : false;
 
             // Grab the next piece of content...
-            const next = index < contents.length - 1 ? contents[index + 1] : null;
+            const next =
+                index < contents.length - 1 ? contents[index + 1] : null;
             // ... and whether it's a sibling (of the same kind)
-            const nextIsSibling = next ? next.getContentTypeID() === contentTypeID : false;
+            const nextIsSibling = next
+                ? next.getContentTypeID() === contentTypeID
+                : false;
 
             // Calculate whether this piece of content is the first...
             const first = previous && previousIsSibling ? false : true;
@@ -281,12 +282,12 @@ export function getGroupInfo({
         .filter(Boolean);
     // ... and a map of all groups
     const map = siblings.reduce((array, { id }) => {
-        array[id] ? array[id] += 1 : array[id] = 1;
+        array[id] ? (array[id] += 1) : (array[id] = 1);
         return array;
     }, []);
 
     // Finally, return the siblings with amount/count data added
-    return siblings.map(data => {
+    return siblings.map((data) => {
         // Grab the amount of groups...
         const amount = map.length;
         // ... and how many are within the current group
@@ -325,9 +326,13 @@ export function getInfo({
     // ... sibling content types...
     const siblings = getSiblings({ contents, contentTypeID });
     // ... and their page...
-    const page = getPageInfo(siblings).find(({ contentID }) => contentID === id) || {};
+    const page =
+        getPageInfo(siblings).find(({ contentID }) => contentID === id) || {};
     // ... and group info
-    const group = getGroupInfo({ contents, contentTypeID }).find(({ contentID }) => contentID === id) || {};
+    const group =
+        getGroupInfo({ contents, contentTypeID }).find(
+            ({ contentID }) => contentID === id
+        ) || {};
 
     // Finally, return all data as an object
     return {

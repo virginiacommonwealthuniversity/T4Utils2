@@ -37,13 +37,16 @@ export function toSHA256(string) {
         const stringBuffer = new java.lang.StringBuffer();
 
         for (let byte = 0; byte < hashedBytes.length; byte++) {
-            stringBuffer.append(java.lang.Integer.toString(
-                (hashedBytes[byte] & 0xff) + 0x100, 16).substring(1)
+            stringBuffer.append(
+                java.lang.Integer.toString(
+                    (hashedBytes[byte] & 0xff) + 0x100,
+                    16
+                ).substring(1)
             );
         }
 
         hash = stringBuffer.toString();
-    } catch(e) {
+    } catch (e) {
         document.write(e);
     }
 

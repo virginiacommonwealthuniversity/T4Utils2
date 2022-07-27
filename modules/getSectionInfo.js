@@ -32,13 +32,14 @@ export let publishLink;
  * T4Utils.getSectionInfo.setPublishLink(section);
  */
 export function setPublishLink(section) {
-    if (!publishLink || section) publishLink = PathBuilder.getLink(
-        dbStatement,
-        section,
-        publishCache,
-        language,
-        isPreview
-    );
+    if (!publishLink || section)
+        publishLink = PathBuilder.getLink(
+            dbStatement,
+            section,
+            publishCache,
+            language,
+            isPreview
+        );
 }
 
 /**
@@ -114,7 +115,7 @@ export function anchorLink(section) {
     // If no URL/text was found, return null...
     if (!url || !text) return null;
     // ... otherwise, return an anchor link with the url/text
-    return `<a href="${ url }">${ text }</a>`;
+    return `<a href="${url}">${text}</a>`;
 }
 
 /**
@@ -130,11 +131,7 @@ export function getDirectory(section) {
     // If no section was provided, return null...
     if (!section) return null;
     // ... otherwise, return the section's directory as a string
-    return PathBuilder.getDirectory(
-        section,
-        publishCache,
-        language
-    ).toString();
+    return PathBuilder.getDirectory(section, publishCache, language).toString();
 }
 
 /**
@@ -152,11 +149,7 @@ export function getChildren(section, removeHidden = false) {
     if (!section) return [];
     // ... otherwise, return the section's children
     return Array.from(
-        section.getChildren(
-            publishCache.channel,
-            language,
-            removeHidden
-        )
+        section.getChildren(publishCache.channel, language, removeHidden)
     );
 }
 

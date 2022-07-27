@@ -191,7 +191,9 @@ export function getMicrositeOrChannelData({
  * @example
  * T4Utils.publishCache.microsite;
  */
-export const microsite = getMicrositeOrChannelData({ microsite: getMicrosite() });
+export const microsite = getMicrositeOrChannelData({
+    microsite: getMicrosite()
+});
 
 /**
  * Retrieve channel data

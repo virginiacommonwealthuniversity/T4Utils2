@@ -42,7 +42,10 @@ export function console(method, message) {
     if (!message || typeof message !== 'string') return;
 
     // Otherwise, write a script tag with the console method if in preview mode
-    if (isPreview) return document.write(`<script t4utils>console.${ method }("${ message }");</script>`);
+    if (isPreview)
+        return document.write(
+            `<script t4utils>console.${method}("${message}");</script>`
+        );
 }
 
 /**
@@ -55,7 +58,7 @@ export function console(method, message) {
  * @example
  * T4Utils.console.log('log message');
  */
-console.log = function(message) {
+console.log = function (message) {
     return this('log', message);
 };
 
@@ -69,7 +72,7 @@ console.log = function(message) {
  * @example
  * T4Utils.console.warn('warning message');
  */
-console.warn = function(message) {
+console.warn = function (message) {
     return this('warn', message);
 };
 
@@ -83,7 +86,7 @@ console.warn = function(message) {
  * @example
  * T4Utils.console.error('error message');
  */
-console.error = function(message) {
+console.error = function (message) {
     return this('error', message);
 };
 
@@ -129,7 +132,7 @@ export const contextIsContent = !!context;
  * T4Utils.write('paragraph text');
  */
 export function write(text) {
-    if (isPreview) return document.write(`<p t4utils>${ text }</p>`);
+    if (isPreview) return document.write(`<p t4utils>${text}</p>`);
 }
 
 /**
@@ -155,7 +158,8 @@ export function toString(obj) {
  * T4Utils.escapeHTML('<p>Unsafe HTML</p>');
  */
 export function escapeHtml(html) {
-    return html.replace(/&/g, '&amp;')
+    return html
+        .replace(/&/g, '&amp;')
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;')
         .replace(/'/g, '&#039;');

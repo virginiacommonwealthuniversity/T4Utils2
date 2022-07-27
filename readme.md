@@ -21,10 +21,10 @@ Check out the [changelog](changelog.md) for previous release information.
 
 ## Table of contents
 
-* [Quick start](#quick-start)
-* [Documentation](#documentation)
-* [Contributing](#contributing)
-* [Contributors](#contributors)
+-   [Quick start](#quick-start)
+-   [Documentation](#documentation)
+-   [Contributing](#contributing)
+-   [Contributors](#contributors)
 
 ## Quick start
 
@@ -45,10 +45,10 @@ Please read through the [contribution guidelines](contribute.md) before opening 
 
 **Joel Eisner**
 
-* [Twitter (@joeleisner)](https://twitter.com/joeleisner)
-* [GitHub (@joeleisner)](https://github.com/joeleisner)
+-   [Twitter (@joeleisner)](https://twitter.com/joeleisner)
+-   [GitHub (@joeleisner)](https://github.com/joeleisner)
 
 **Sam Yerkes**
 
-* [Twitter (@samyerkes)](https://twitter.com/samyerkes)
-* [GitHub (@samyerkes)](https://github.com/samyerkes)
+-   [Twitter (@samyerkes)](https://twitter.com/samyerkes)
+-   [GitHub (@samyerkes)](https://github.com/samyerkes)

@@ -83,15 +83,14 @@ export function generateT4Tag({
         formatter
     };
     // ... and generate HTML attributes using them
-    const attributes = Object
-        .keys(settings)
-        .map(key => {
+    const attributes = Object.keys(settings)
+        .map((key) => {
             // Grab the key's corresponding value
             let value = settings[key];
 
             // If there is no value, return false
             if (!value) return false;
-    
+
             // If the value is undefined/null, return false
             if (value == undefined) return false;
 
@@ -108,7 +107,7 @@ export function generateT4Tag({
         .join(' ');
 
     // Create the tag...
-    const tag = `<t4 ${ attributes } />`;
+    const tag = `<t4 ${attributes} />`;
     // ... and return it processed
     return processT4Tag(tag);
 }
